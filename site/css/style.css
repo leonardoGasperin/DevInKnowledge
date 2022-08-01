@@ -1,0 +1,188 @@
+body{
+    background-color:lightgrey;
+}
+
+input{
+    border-radius: 5px;
+}
+
+#panel{
+    margin-top: 20vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#left{
+    background-color: #2A0D5D;
+    color: white;
+
+    padding: 15px;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+h1{
+    margin-left: 50px;
+}
+
+header{
+    display: flex;
+}
+
+header > img{
+    margin-left: 15px;
+    margin-top: 10px;
+    width: 75px;
+    height: 75px;
+}
+
+h1{
+    margin-top: 0px;
+    margin-left: 10px;
+}
+
+h1 > span{
+    font-size: small;
+}
+
+#left input{
+    margin-top: 7.5px;
+    display: flex;
+    width: 350px;
+    height: 20px;
+    box-shadow: 2px 4px 0 0 #000000;
+}
+
+#left select{
+    width: 357px;
+    height: 20px;
+    box-shadow: 2px 4px 0 0 #000000;
+    margin-top: 7.5px;
+}
+
+#forms > div{
+    margin-top: 25px;
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+}
+
+#required{
+    margin-left: 50px;
+    font-size: xx-small;
+}
+
+.required{
+    color: red;
+    margin-left: 7px;
+    margin-right: 7px;
+}
+
+#left button{
+    width: 150px;
+}
+
+#left label{
+    margin-top: 7.5px;
+    display: flex;
+}
+
+#left textarea{
+    margin-top: 7.5px;
+}
+
+#divisor{
+    width: 2px;
+    height: 600px;
+    background-color: #000000;
+}
+
+/* right side */
+#right{
+    background-color: #2A0D5D  ;
+}
+
+#cards{
+    margin-bottom: 15px;
+    display: flex;
+}
+
+.card{
+    height: 50px;
+    box-shadow: 0 2px 2px 0 #000000;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    transition: 0.3s;
+    margin-top: 5px;
+    margin-left: 10px;
+    padding: .5em;
+    text-align: center;
+}
+
+.tipC{
+    margin-top: 0px;
+    margin-bottom: 12px;
+}
+
+#tipBoard{
+    display: flex;
+    background-color: dimgrey;
+    margin-top: 15px;
+    margin-left: 3.5px;
+    overflow-y: scroll;
+    width: 425px;
+    height: 465px;
+    max-width: 425px;
+    max-height: 464px;
+    flex-wrap: wrap;
+}
+
+#search{    
+    border-radius: 20px;
+    margin-left: 5px;
+    width: 355px;
+    height: 25px;
+    max-width: 375px;
+}
+
+.tip{
+    height: 210px;
+    width: 180px;
+    box-shadow: 0 2px 2px 0 #000000;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    transition: 0.3s;
+    margin-top: 5px;
+    margin-left: 5px;
+    padding: .5em;
+    text-align: center;
+}
+
+.tipClass{
+    margin-top: -1px;
+    text-align: left;
+    font-size: 12px;
+}
+h4{
+    margin: 0px;
+}
+
+.desc{
+    margin-top: 0px;
+    margin-bottom: 0px;
+    text-align: left;
+    font-size: 12px;
+}
+
+#tipbtn{
+    margin-top: 33px;
+    display: flex;
+    justify-content: right;
+}
+
+.tipbtn{
+    margin-left: 5px;
+}

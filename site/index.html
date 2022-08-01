@@ -8,37 +8,152 @@
     <link rel="stylesheet" href="./css/style.css">
     <link rel="shortcut icon" href="./img/favicon/meufav.ico" type="image/x-icon">
     <script src="./js/module.js" type="module"></script>
+
     <title>DEVinKnowledge &middot; Tip's Maker</title>
 </head>
 <body>
-    <header>
-        DEVinKnowledge
-        <br>
-        <span>Tip's Maker</span>
-    </header>
+    <!-- TODO
+            comentar codigo 
+    -->
+    <main id="panel">
+        <div id="left">
+            <header>
+                <img src="./img/favicon/meufav.ico" alt="">
+                <h1>
+                    <span id="dev">DEV</span>inKnowledge 
+                    <br>
+                    <span id="headerSpan">Tip's Maker</span>
+                </h1>
+            </header>
 
-    <section id="left">
-        <div id="forms">
             <form action="submit" id="forms">
-                <label for="title">Título</label>
+                <span id="required">itens marcados com (<span class="required">*</span>) são obrigatorios</span>
+                <label for="title">Título<span class="required">*</span></label>
                 <input type="text" name="title" id="title" minlength="8" maxlength="64" placeholder="Escolha um titulo" required autocomplete="off">
-                <label for="skill">Linguagem/Skill</label>
+                <label for="skill">Linguagem/Skill<span class="required">*</span></label>
                 <input type="text" name="skill" id="skill" minlength="8" maxlength="32" placeholder="linguagem e.g. (C#, C++, C)" required autocomplete="on">
-                <label for="category">Categoria</label>
+                <label for="category">Categoria<span class="required">*</span></label>
                 <select name="category" id="category">
+                    <option value="initial">Escolha uma opção</option>
                     <option value="frontend">FrontEnd</option>
                     <option value="backEnd">BackEnd</option>
                     <option value="fullStack ">FullStack </option>
                     <option value="soft">SoftSkill</option>
                 </select>
                 <label for="desc">Descrição</label>
-                <textarea name="desc" id="desc" minlength="16" maxlength="1024" cols="30" rows="10"></textarea>
+                <textarea name="desc" id="desc" minlength="16" maxlength="1024" cols="46" rows="10" placeholder="Adicione uma descrição. 1024 caractere (opcional)"></textarea>
                 <label for="video">Video(link)</label>
                 <input type="url" name="video" id="video" placeholder="Adicione um video" autocomplete="off">
-                <button type="submit" id="cls">Limpar</button>
+                
+                <div>
+                    <button type="submit" id="clsR">Limpar</button>
                 <button type="submit" id="sv">Salvar</button>
+                </div>
             </form>
         </div>
-    </section>
+
+        <div id="divisor"></div>
+
+        <div id="right">
+            <div id="cards">
+                <div class="card">
+                    <h4 class="tipC">Total</h4>
+                    <p class="cardTx">38</p>
+                </div>
+                <div class="card">
+                    <h4i class="tipC"><b>FrontEnd</b></h4>
+                    <p class="cardTx">38</p>
+                </div>
+                <div class="card">
+                    <h4 class="tipC">BackEnd</h4>
+                    <p class="cardTx">12</p>
+                </div>
+                <div class="card">
+                    <h4 class="tipC">FullStack</h4>
+                    <p class="cardTx">5</p>
+                </div>
+                <div class="card">
+                    <h4 class="tipC">SoftSkill</h4>
+                    <p class="cardTx">14</p>
+                </div>
+            </div>
+
+            <div id="srch">
+                <input type="srchInp" name="search" id="search" placeholder="Pesquise uma Tip">
+                <button id="srchApply"></button>
+                <button id="srchCls"></button>
+            </div>
+
+            <aside id="tipBoard">
+                <div class="tip">
+                    <h4>Grid cs Flex-box</h4>
+                    <p class="tipClass"><b>Linguagem/Skill: </b>CSS</p>
+                    <p class="tipClass"><b>Categoria: </b>FrontEnd</p>
+                    <p class="desc">A diferença crucial entre Flex-box e grid, 
+                        alem do primeiro ser unidimensional e o outro bidimencional,
+                         é que o controle do layout do grid vem do container e no Flex-box 
+                         vem dos elementos
+                    </p>
+
+                    <div id="tipbtn">
+                        <button class="tipbtn" id="del"></button>
+                        <button class="tipbtn" id="share"></button>
+                        <button class="tipbtn" id="video"></button>
+                    </div>
+                </div>
+
+                <div class="tip">
+                    <h4>Grid cs Flex-box</h4>
+                    <p class="tipClass"><b>Linguagem/Skill: </b>CSS</p>
+                    <p class="tipClass"><b>Categoria: </b>FrontEnd</p>
+                    <p class="desc">A diferença crucial entre Flex-box e grid, 
+                        alem do primeiro ser unidimensional e o outro bidimencional,
+                         é que o controle do layout do grid vem do container e no Flex-box 
+                         vem dos elementos
+                    </p>
+
+                    <div id="tipbtn">
+                        <button class="tipbtn" id="del"></button>
+                        <button class="tipbtn" id="share"></button>
+                        <button class="tipbtn" id="video"></button>
+                    </div>
+                </div>
+
+                <div class="tip">
+                    <h4>Grid cs Flex-box</h4>
+                    <p class="tipClass"><b>Linguagem/Skill: </b>CSS</p>
+                    <p class="tipClass"><b>Categoria: </b>FrontEnd</p>
+                    <p class="desc">A diferença crucial entre Flex-box e grid, 
+                        alem do primeiro ser unidimensional e o outro bidimencional,
+                         é que o controle do layout do grid vem do container e no Flex-box 
+                         vem dos elementos
+                    </p>
+
+                    <div id="tipbtn">
+                        <button class="tipbtn" id="del"></button>
+                        <button class="tipbtn" id="share"></button>
+                        <button class="tipbtn" id="video"></button>
+                    </div>
+                </div>
+
+                <div class="tip">
+                    <h4 id="tipH">Grid cs Flex-box</h4>
+                    <p class="tipClass"><b>Linguagem/Skill: </b>CSS</p>
+                    <p class="tipClass"><b>Categoria: </b>FrontEnd</p>
+                    <p class="desc">A diferença crucial entre Flex-box e grid, 
+                        alem do primeiro ser unidimensional e o outro bidimencional,
+                         é que o controle do layout do grid vem do container e no Flex-box 
+                         vem dos elementos
+                    </p>
+
+                    <div id="tipbtn">
+                        <button class="tipbtn" id="del"></button>
+                        <button class="tipbtn" id="share"></button>
+                        <button class="tipbtn" id="video"></button>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
 </body>
 </html>
