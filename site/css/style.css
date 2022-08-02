@@ -19,9 +19,7 @@ main{
 #left{
     background-color: #2A0D5D;
     color: white;
-
     padding: 15px;
-    
     display: flex;
     flex-direction: column;
     justify-content: center;
