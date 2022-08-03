@@ -64,7 +64,7 @@ h1 > span{
     margin-top: 7.5px;
 }
 
-#forms > div{
+#formBtn{
     margin-top: 25px;
     display: flex;
     justify-content: center;
@@ -170,11 +170,20 @@ h1 > span{
 
 .tipClass{
     margin-top: -1px;
+    margin-bottom: 7px;
     text-align: left;
     font-size: 12px;
+    overflow-wrap: break-word;
 }
 h4{
     margin: 0px;
+    overflow-wrap: break-word;
+}
+
+.tipAside{
+    overflow-y: hidden;
+    width: 180px;
+    height: 105px;
 }
 
 .desc{
@@ -182,14 +191,12 @@ h4{
     margin-bottom: 0px;
     text-align: left;
     font-size: 12px;
+    overflow-wrap: break-word;
 }
 
 #tipbtn{
-    margin-top: 33px;
+    margin-top: 20px;
     display: flex;
     justify-content: right;
-}
-
-.tipbtn{
-    margin-left: 5px;
+    gap: 5px;
 }
