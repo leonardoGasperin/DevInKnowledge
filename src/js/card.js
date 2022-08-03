@@ -1,3 +1,5 @@
+export const cardVt = [];
+
 export default class Card{
     constructor(title, skill, cat, desc, hLink){
         this.title = title;
@@ -8,12 +10,13 @@ export default class Card{
     }
 
     makecard(obj = new Card()){
-        const asideBx = document.getElementById("tipBoard"); 
-        const descAside = document.createElement("aside");
-        const asideDiv = document.createElement("div");
+        const asideBx = document.getElementById("tipBoard");
+        const overlayDiv = document.createElement("div");
+        const tipCard = document.createElement("div");
         const cardTitle = document.createElement("h4");
         const cardSkill = document.createElement("p");        
         const cardCat = document.createElement("p");
+        const descAside = document.createElement("aside");
         const cardDesc = document.createElement("p");
         //        const cardLink = document.createElement("??");
         const divBtn = document.createElement("div");
@@ -21,15 +24,11 @@ export default class Card{
         const btnEdit = document.createElement("button");;
         const btnVideo = document.createElement("button");
 
-        const strongSkill = document.createElement("strong");
-        strongSkill.innerText = "Skill: ";
-        const strongCat = document.createElement("strong");
-        strongCat.innerText = "Categoria: ";
-        
-        asideDiv.className = "tip";
-        descAside.className = "tipAside";
+        overlayDiv.className = "overlay";
+        tipCard.className = "tip";
         cardSkill.className = "tipClass";
         cardCat.className = "tipClass";
+        descAside.className = "tipAside";
         cardDesc.className = "desc";
         divBtn.id = "tipbtn";
         btnDel.className = "tipbtn";
@@ -39,22 +38,44 @@ export default class Card{
         btnVideo.className = "tipbtn";
         btnVideo.id = "video";
 
+        tipCard.append(overlayDiv);
+
         cardTitle.innerHTML = obj.title;
-        asideDiv.append(cardTitle);
+        tipCard.append(cardTitle);
+
+        const strongSkill = document.createElement("strong");
+        strongSkill.innerText = "Skill: ";
         cardSkill.append(strongSkill);
         cardSkill.innerHTML += obj.skill;
-        asideDiv.append(cardSkill);
+        tipCard.append(cardSkill);
+        
+        const strongCat = document.createElement("strong");
+        strongCat.innerText = "Categoria: ";
         cardCat.append(strongCat);
         cardCat.innerHTML += obj.cat;
-        asideDiv.append(cardCat);
+        tipCard.append(cardCat);
+
         cardDesc.innerHTML = obj.desc;
         descAside.append(cardDesc);
-        asideDiv.append(descAside);
+        tipCard.append(descAside);
+
         divBtn.append(btnDel);
         divBtn.append(btnEdit);
         divBtn.append(btnVideo);
-        asideDiv.append(divBtn);
-        asideBx.appendChild(asideDiv);
+        tipCard.append(divBtn);
 
+        asideBx.appendChild(tipCard);
+
+        this.saveTst(this);
+
+        overlayDiv.id = (cardVt.length - 1).toString();
+    }
+
+    saveTst(obj = new Card()){
+        cardVt.push(obj);
+    }
+
+    openCard(){
+        console.log("ABRIU!")
     }
 }

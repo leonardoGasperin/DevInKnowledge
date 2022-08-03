@@ -137,6 +137,8 @@ h1 > span{
     max-width: 375px;
 }
 
+
+/*CARTOES*/
 .tipC{
     margin-top: 0px;
     margin-bottom: 12px;
@@ -166,6 +168,10 @@ h1 > span{
     margin-left: 5px;
     padding: .5em;
     text-align: center;
+}
+
+.tip:hover .overlay{
+    opacity: 1;
 }
 
 .tipClass{
@@ -199,4 +205,23 @@ h4{
     display: flex;
     justify-content: right;
     gap: 5px;
+}
+
+.overlay{
+    position:absolute; 
+    background: rgb(0, 0, 0);
+    background: rgba(0, 0, 0, 0);
+    color: #000;
+    width: 180px;
+    height: 210px;
+    /* opacity: 1; */
+    transition: 0.5s ease;
+
+    /* position: absolute;
+
+    height: 210px;
+    width: 180px;
+    opacity: 0;
+    transition: .3s ease;
+    background-color: red; */
 }
