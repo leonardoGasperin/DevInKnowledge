@@ -13,10 +13,24 @@ addEventListener("change", () => {
                          && category.selectedIndex != 0 && (desc.value == "" || desc.value.length >= 16) && chkLink(video.value))
         {
             btnSv.disabled = false;
+        }else
+            btnSv.disabled = true;
+    
+    if(document.getElementById("editEditor"))
+    {
+        if(document.getElementById("labelTitle").value != "" && document.getElementById("labelTitle").value != undefined  && document.getElementById("labelTitle").value.length >= 8 &&
+                         document.getElementById("labelSkill").value != "" && document.getElementById("labelSkill").value.length >= 2
+                         && (document.getElementById("labelDesc").value == "" || document.getElementById("labelDesc").value.length >= 16)
+                         && (chkLink(document.getElementById("labelLink").value, true) ||  document.getElementById("labelLink").value == ""))
+        {
+            document.getElementById("editEditor").disabled = false;
+        }else{
+            document.getElementById("editEditor").disabled = true;
         }
-    else
-        btnSv.disabled = true;
+    }
 })
+
+
 
 addEventListener("click", () => {
     if(title.value != "" && title.value != undefined && title.value.length >= 8 && skill.value != "" && skill.value.length >= 2
@@ -32,34 +46,68 @@ addEventListener("click", (e) => {
     ///TODO
       //mudar para switch()
     if(e.target.className == "overlay"){
-        cardVt[Number(e.target.id)].openCard(cardVt[Number(e.target.id)]);
+        cardVt[Number(e.target.id)].openCard(cardVt[Number(e.target.id)], e.target.id);
         document.getElementById("vanderlay").style.display = "flex";
         cardVt[Number(e.target.id)]
     }
-    else if(e.target.id == "vanderlay")
-    {
+    else if(e.target.id == "vanderlay"){
         document.getElementById("tipOpn").outerHTML = "";
         document.getElementById("vanderlay").style.display = "none";
     }
     else if(e.target.id == "del"){
-        deleteFromList(Number(e.target.name));
-        if(document.getElementById("vanderlay").style.display == "flex")
-            document.getElementById("vanderlay").style.display = "none";
-        updateScreem();
+        if(confirm(`reamente deseja deletar a Tip ${cardVt[Number(e.target.name)].title}`)){
+            deleteFromList(Number(e.target.name));
+            saveCards();
+            document.getElementById("tipOpn").outerHTML = "";
+            if(document.getElementById("vanderlay").style.display == "flex"){
+                document.getElementById("vanderlay").style.display = "none";
+            }
+            updateScreem();
+        }
     }
     else if(e.target.id == "edit"){
-        console.log("1th xamada!");
+        alert(`Você agora esta abrindo o Edit Mode, qualquer alteração feita feita em ${cardVt[Number(e.target.name)].title} sobrescreverá a Tip.\nTem certeza que deseja abrir o Edit Mode?`);
         editMode(Number(e.target.name));
+        if(document.getElementById("tipOpn")){
+            console.log(e.target.id)
+                document.getElementById("tipOpn").outerHTML = "";}
+        document.getElementById("editlay").style.display = "none";
+        if(document.getElementById("vanderlay").style.display = "flex"){
+            
+            document.getElementById("vanderlay").style.display = "none";
+        }
         document.getElementById("editlay").style.display = "flex";
     }
-    else if(e.target.name == "edit"){
-        editing(editorInd);
-        updateScreem();
-        document.getElementById("editlay").style.display = "none";
+    else if(e.target.id == "delEditor"){
+        if(confirm(`Gostaria de sair do Edit Mode? Todas as informações alteradas em ${cardVt[Number(e.target.name)].title} não serão salvas`)){    
+            document.getElementById("editlay").style.display = "none";
+            document.getElementById("tipEditor").outerHTML = "";
+            if(document.getElementById("vanderlay").style.display = "flex"){
+                    document.getElementById("vanderlay").style.display = "none";
+            }
+    }
+
+    }
+    else if(e.target.id == "editEditor"){
+        if(confirm(`Tem certeza que deseja editar a tip ${cardVt[e.target.name].title}? Qualquer alteração será mantida.`)){
+            editing(editorInd);
+            saveCards();
+            updateScreem();
+            document.getElementById("editlay").style.display = "none";
+            document.getElementById("tipEditor").outerHTML = "";
+            
+            if(document.getElementById("vanderlay").style.display = "flex"){
+                if(document.getElementById("tipOpn"))
+                    document.getElementById("tipOpn").outerHTML = "";
+                document.getElementById("vanderlay").style.display = "none";
+            }
+        }
     }    
-    else if(e.target.id == "editlay" || e.target.name == "del"){
+    else if(e.target.id == "editlay" || e.target.id == "delEditor"){
+        document.getElementById("tipEditor").outerHTML = "";
+        console.log(document.getElementById("tipOpn"))
+        
         updateScreem();
-        document.getElementById("editlay").style.display = "none";
     }
     else if(e.target.id == "srchApply"){
         console.log("PESQUISANDO!");
@@ -86,6 +134,8 @@ btnSv.addEventListener("click", () => {
             )
             
             card.saveTst(card);
+            saveCards();
+            alert(`A tip ${title.value} foi salva com sucesso!`);
             updateScreem();
         }
     else{
@@ -115,6 +165,8 @@ function updateScreem(){
     backVl.innerText = 0;
     fullStcVl.innerText = 0;
     softVl.innerText = 0;
+
+    loadCards();
 
     cardVt.filter((cards, i) => {
         if(cards.title.toLocaleLowerCase().includes(shrch.value.toLocaleLowerCase()))
@@ -147,4 +199,27 @@ function updateScreem(){
     }
     else
         document.getElementById("tipBoard").style.overflowY = "hidden";
+}
+
+function saveCards(){
+    const JSONCardSvr = JSON.stringify(cardVt);
+    localStorage.setItem("Cards", JSONCardSvr);
+}
+
+function loadCards(){
+    const loader = localStorage.getItem("Cards");
+
+    if(loader && loader.length > 2){
+        const _temp = JSON.parse(loader);
+
+        cardVt.splice(0, cardVt.length)
+    
+        _temp.forEach(element => {
+            element.hLink = (element.hLink == "" || element.hLink == undefined || element.hLink == true) ?  "" : element.hLink;
+            console.log(element.hLink)
+            console.log(chkLink(element.hLink))
+            
+            cardVt.push(new Card(element.title, element.skill, element.cat, element.desc, element.hLink));
+        });
+    }
 }

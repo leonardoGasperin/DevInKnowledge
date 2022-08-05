@@ -1,6 +1,7 @@
 export const cardVt = [];
 export let editorInd;
 
+
 export default class Card{
     constructor(title, skill, cat, desc, hLink){
         this.title = title;
@@ -79,7 +80,7 @@ export default class Card{
         tipCard.appendChild(overlayDiv);
     }
 
-    openCard(obj = new Card()){
+    openCard(obj = new Card(), i){
 
         const overDiv = document.getElementById("vanderlay");
         const opnTipDiv = document.createElement("div");
@@ -103,8 +104,10 @@ export default class Card{
         cardLink.id = "opnTipVideo";
         opnDivBtn.id = "opnTipbtn";
         opnBtnDel.className = "tipbtn";
+        opnBtnDel.name = i;
         opnBtnDel.id = "del";
         opnBtnEdit.className = "tipbtn";
+        opnBtnEdit.name = i;
         opnBtnEdit.id = "edit";
 
         opnCardTitle.innerHTML = obj.title;
@@ -126,6 +129,10 @@ export default class Card{
 
         opnTipDiv.append(opnDivDesc);
         opnCardDesc.innerHTML = obj.desc;
+        if(opnCardDesc.style.height >= 330)
+            opnTipDiv.style.overflowY = "scroll";
+        else
+            opnTipDiv.style.overflowY = "none";
         opnDivDesc.append(opnCardDesc);
 
         if(obj.hLink != "" && obj.hLink != true){
@@ -152,30 +159,38 @@ export default class Card{
     }
 }
 
-export function chkLink(url = new URL()){
+export function chkLink(url = new URL(), editChck = false){
     // console.log(url, url.origin, new URL("https://www.youtube.com").origin) //assert
-    if(url != ""){
-        url = new URL(url);
-        if(url.origin == new URL("https://www.youtube.com").origin){
-            let link = "";
-            for(let i = 3; i < 14; i++)
-            {
-                link += url.search.charAt(i);
-            }
-            return url.origin + "/embed/" + link;
-        }
-        else if(url.origin == new URL("https://youtu.be").origin)
-        {
-            console.log("3")
-            let link = "https://www.youtube.com" + "/embed" + url.pathname
+    if(chrckUrl(url)){
+        if(url != "" ){
+            url = new URL(url);
 
-            return link;
-        }else{
-            return false
-        }
+            {if(url.origin == new URL("https://www.youtube.com").origin){
+                let link = "";
+                for(let i = 3; i < 14; i++)
+                {
+                    link += url.search.charAt(i);
+                }
+                return url.origin + "/embed/" + link;
+            }
+            else if(url.origin == new URL("https://youtu.be").origin)
+            {
+                //console.log("3")
+                let link = "https://www.youtube.com" + "/embed" + url.pathname
+
+                //console.log(link)
+                return link;
+            }else{
+                return false
+            }}
+        }else
+            return true
+    }else{
+        if(editChck)
+            return false;
+        else
+            return true;
     }
-    else
-        return true
 }
 
 export function editMode(i){
@@ -187,7 +202,13 @@ export function editMode(i){
     const labelSkill = document.createElement("label");
     const opnCardSkill = document.createElement("input");        
     const labelCat = document.createElement("label");
-    const opnCardCat = document.createElement("selector");
+    const opnCardCat = document.createElement("select");
+
+    const fECat = document.createElement("option");
+    const bECat = document.createElement("option");
+    const fSCat = document.createElement("option");
+    const stSCat = document.createElement("option");
+
     const labelDesc = document.createElement("label");
     const opnDivDesc = document.createElement("div");
     const opnCardDesc = document.createElement("textarea");
@@ -198,7 +219,7 @@ export function editMode(i){
     const opnBtnDel = document.createElement("button");
     const opnBtnEdit = document.createElement("button");
 
-    opnTipDiv.id = "tipOpn";
+    opnTipDiv.id = "tipEditor";
     opnInfoDiv.id = "h4";
 
     labelTitle.htmlFor = "labelTitle";
@@ -233,10 +254,10 @@ export function editMode(i){
 
     opnDivBtn.id = "opnTipbtn";
     opnBtnDel.className = "tipbtn";
-    opnBtnDel.name = "del";
+    opnBtnDel.name = i;
     opnBtnDel.id = "delEditor";
     opnBtnEdit.className = "tipbtn";
-    opnBtnEdit.name = "edit";
+    opnBtnEdit.name = i;
     opnBtnEdit.id = "editEditor";
 
     opnCardTitle.minLength= 8;
@@ -255,11 +276,17 @@ export function editMode(i){
     opnInfoDiv.append(labelSkill);
     opnInfoDiv.append(opnCardSkill);
 
-    opnCardCat.innerHTML = cardVt[i].cat;
+    fECat.innerHTML = "FrontEnd";
+    opnCardCat.appendChild(fECat);
+    bECat.innerHTML = "BackEnd";
+    opnCardCat.appendChild(bECat);
+    fSCat.innerHTML = "FullStack";
+    opnCardCat.appendChild(fSCat);
+    stSCat.innerHTML = "SoftSkill";
+    opnCardCat.appendChild(stSCat);
     opnInfoDiv.append(labelCat);
     opnInfoDiv.append(opnCardCat);
 
-    
     opnCardDesc.minLength= 16;
     opnCardDesc.maxlength = 1024;
     opnCardDesc.style.resize = "none";
@@ -286,12 +313,15 @@ export function editMode(i){
 
 export function editing(i){
     if(typeof i == "number"){
-        console.log(document.getElementById("labelTitle").value)
         cardVt[i].title = document.getElementById("labelTitle").value;
         cardVt[i].skill = document.getElementById("labelSkill").value;
         cardVt[i].cat = document.getElementById("labelCat").value;
         cardVt[i].desc = document.getElementById("labelDesc").value;
-        cardVt[i].hLink = chkLink(document.getElementById("labelLink").value);
+
+        if(!chrckUrl(document.getElementById("labelLink").value))
+        document.getElementById("labelLink").value = "";
+        cardVt[i].hLink = document.getElementById("labelLink").value;
+        document.getElementById("labelLink").value = "";
         i = undefined;
 }
 }
@@ -302,4 +332,13 @@ export function deleteFromList(i){
 
 function makeEditorInd(i){
     editorInd = i
+}
+
+function chrckUrl(value){
+    try{
+        let url = new URL(value)
+        return true;
+    }catch(error){
+        return false;
+    }
 }

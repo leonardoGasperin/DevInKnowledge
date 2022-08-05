@@ -95,7 +95,7 @@ h1 > span{
     margin-top: 7.5px;
 }
 
-form input:invalid{
+formforms input:invalid{
     border-color: red;
 }
 form input:valid{
@@ -265,7 +265,7 @@ h4{
 }
 
 /*CARTAO aberto*/
-#tipOpn{
+#tipOpn, #tipEditor{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -307,7 +307,7 @@ h4{
 }
 
 #opnP{
-    overflow-y:scroll;
+    /* overflow-y:scroll; */
     overflow-x: hidden;
     max-width: 445px;
     max-height: 350px;
@@ -329,6 +329,7 @@ h4{
 
     display: flex;
     justify-content: center;
+    word-break: break-all;
     overflow-wrap: break-word;
 }
 
