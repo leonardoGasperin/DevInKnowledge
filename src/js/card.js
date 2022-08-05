@@ -1,4 +1,5 @@
 export const cardVt = [];
+export let editorInd;
 
 export default class Card{
     constructor(title, skill, cat, desc, hLink){
@@ -74,6 +75,7 @@ export default class Card{
 
         overlayDiv.id = i;
         btnDel.name = i;
+        btnEdit.name = i;
         tipCard.appendChild(overlayDiv);
     }
 
@@ -126,7 +128,6 @@ export default class Card{
         opnDivDesc.append(opnCardDesc);
 
         if(obj.hLink != "" && obj.hLink != true){
-            console.log(typeof obj.hLink)
             const videoIframe = document.createElement("iframe");
             videoIframe.width = "560";
             videoIframe.height= "315";
@@ -176,6 +177,128 @@ export function chkLink(url = new URL()){
         return true
 }
 
+export function editMode(i){
+    const overDiv = document.getElementById("editlay");
+    const opnTipDiv = document.createElement("div");
+    const opnInfoDiv = document.createElement("div");
+    const labelTitle = document.createElement("label");
+    const opnCardTitle = document.createElement("input");
+    const labelSkill = document.createElement("label");
+    const opnCardSkill = document.createElement("input");        
+    const labelCat = document.createElement("label");
+    const opnCardCat = document.createElement("selector");
+    const labelDesc = document.createElement("label");
+    const opnDivDesc = document.createElement("div");
+    const opnCardDesc = document.createElement("textarea");
+    const cardLinkDiv = document.createElement("div");
+    const labelLink = document.createElement("label");
+    const cardLink = document.createElement("input")
+    const opnDivBtn = document.createElement("div");
+    const opnBtnDel = document.createElement("button");
+    const opnBtnEdit = document.createElement("button");
+
+    opnTipDiv.id = "tipOpn";
+    opnInfoDiv.id = "h4";
+
+    labelTitle.htmlFor = "labelTitle";
+    opnCardTitle.name = "labelTitle";
+    opnCardTitle.id = "labelTitle";
+    labelTitle.innerHTML = "Titulo";
+
+    labelSkill.htmlFor = "labelSkill";
+    opnCardSkill.name = "labelSkill";
+    opnCardSkill.id = "labelSkill";
+    opnCardSkill.className = "opnTipClass";
+    labelSkill.innerHTML ="Skill";
+    
+    labelCat.htmlFor = "labelCat";
+    opnCardCat.name = "labelCat";
+    opnCardCat.id = "labelCat";
+    opnCardCat.className = "opnTipClass";
+    labelCat.innerHTML = "Categoria"
+
+    opnDivDesc.id = "opnP";
+    labelDesc.htmlFor = "labelDesc";
+    opnCardDesc.name = "labelDesc";
+    opnCardDesc.id = "labelDesc";
+    opnCardDesc.className = "opnDesc";
+    labelDesc.innerHTML = "Descrição";
+    
+    cardLinkDiv.id = "opnTipVideo";
+    labelLink.htmlFor = "labelLink";
+    cardLink.name = "labelLink";
+    cardLink.id = "labelLink";
+    labelLink.innerHTML = "Compartilhe um video(Youtube)";
+
+    opnDivBtn.id = "opnTipbtn";
+    opnBtnDel.className = "tipbtn";
+    opnBtnDel.name = "del";
+    opnBtnDel.id = "delEditor";
+    opnBtnEdit.className = "tipbtn";
+    opnBtnEdit.name = "edit";
+    opnBtnEdit.id = "editEditor";
+
+    opnCardTitle.minLength= 8;
+    opnCardTitle.maxlength = 16;
+    opnCardTitle.required = true;
+    opnCardTitle.value = cardVt[i].title;
+    opnInfoDiv.append(labelTitle);
+    opnInfoDiv.append(opnCardTitle);
+    opnTipDiv.append(opnInfoDiv)
+    overDiv.appendChild(opnTipDiv)
+
+    opnCardTitle.minLength= 2;
+    opnCardTitle.maxlength = 16;
+    opnCardTitle.required = true;
+    opnCardSkill.value = cardVt[i].skill;
+    opnInfoDiv.append(labelSkill);
+    opnInfoDiv.append(opnCardSkill);
+
+    opnCardCat.innerHTML = cardVt[i].cat;
+    opnInfoDiv.append(labelCat);
+    opnInfoDiv.append(opnCardCat);
+
+    
+    opnCardDesc.minLength= 16;
+    opnCardDesc.maxlength = 1024;
+    opnCardDesc.style.resize = "none";
+    opnTipDiv.append(opnDivDesc);
+    opnCardDesc.value = cardVt[i].desc;
+    opnDivDesc.append(labelDesc);
+    opnDivDesc.append(opnCardDesc);
+
+    cardLink.type = "url";
+    if(cardVt[i].hLink != true)
+        cardLink.value = cardVt[i].hLink;
+    else
+        cardLink.value = "";
+    cardLinkDiv.appendChild(labelLink);
+    cardLinkDiv.appendChild(cardLink);
+    opnTipDiv.append(cardLinkDiv);
+    
+    opnTipDiv.append(opnDivBtn);
+    opnDivBtn.append(opnBtnDel);
+    opnDivBtn.append(opnBtnEdit);
+    
+    makeEditorInd(i);
+}
+
+export function editing(i){
+    if(typeof i == "number"){
+        console.log(document.getElementById("labelTitle").value)
+        cardVt[i].title = document.getElementById("labelTitle").value;
+        cardVt[i].skill = document.getElementById("labelSkill").value;
+        cardVt[i].cat = document.getElementById("labelCat").value;
+        cardVt[i].desc = document.getElementById("labelDesc").value;
+        cardVt[i].hLink = chkLink(document.getElementById("labelLink").value);
+        i = undefined;
+}
+}
+
 export function deleteFromList(i){
     cardVt.splice(i, 1);
+}
+
+function makeEditorInd(i){
+    editorInd = i
 }

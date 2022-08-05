@@ -1,4 +1,4 @@
-import Card, { cardVt, chkLink, deleteFromList } from "./card.js";
+import Card, { cardVt, chkLink, deleteFromList, editMode, editing, editorInd } from "./card.js";
 
 const btnSv = document.getElementById("svCr");
 const title = document.getElementById("title");
@@ -41,10 +41,23 @@ addEventListener("click", (e) => {
     }
     else if(e.target.id == "del"){
         deleteFromList(Number(e.target.name));
+        if(document.getElementById("vanderlay").style.display == "flex")
+            document.getElementById("vanderlay").style.display = "none";
         updateScreem();
     }
     else if(e.target.id == "edit"){
-        console.log("EDITANDO!");
+        console.log("1th xamada!");
+        editMode(Number(e.target.name));
+        document.getElementById("editlay").style.display = "flex";
+    }
+    else if(e.target.name == "edit"){
+        editing(editorInd);
+        updateScreem();
+        document.getElementById("editlay").style.display = "none";
+    }    
+    else if(e.target.id == "editlay" || e.target.name == "del"){
+        updateScreem();
+        document.getElementById("editlay").style.display = "none";
     }
     else if(e.target.id == "srchApply"){
         console.log("PESQUISANDO!");
