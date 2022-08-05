@@ -15,6 +15,11 @@
     <!-- TODO
             comentar codigo 
     -->
+
+    <!-- <header id="header">
+
+    </header> -->
+
     <main id="panel">
         <section id="left">
             <header>
@@ -26,15 +31,15 @@
                 </h1>
             </header>
 
-            <!-- <form id="forms"> -->
+            <form id="forms">
                 <span id="required">itens marcados com (<span class="required">*</span>) são obrigatorios</span>
                 <label for="title">Título<span class="required">*</span></label>
                 <input type="text" name="title" id="title" minlength="8" maxlength="16" placeholder="Escolha um titulo" required autocomplete="off">
                 <label for="skill">Linguagem/Skill<span class="required">*</span></label>
-                <input type="text" name="skill" id="skill" minlength="2" maxlength="16" placeholder="linguagem e.g. (C#, C++, C)" required autocomplete="on">
+                <input type="text" name="skill" id="skill" minlength="2" maxlength="16" placeholder="linguagem e.g. (C#, C++, C)" required autocomplete="off">
                 <label for="category">Categoria<span class="required">*</span></label>
                 <select name="category" id="category" required>
-                    <option value="default" selected>Escolha uma opção</option>
+                    <option value="default" selected aria-invalid="true">Escolha uma opção</option>
                     <option value="frontend">FrontEnd</option required>
                     <option value="backEnd">BackEnd</option required>
                     <option value="fullStack ">FullStack </option required>
@@ -42,14 +47,13 @@
                 </select>
                 <label for="desc">Descrição</label>
                 <textarea name="desc" id="desc" minlength="16" maxlength="1024" cols="46" rows="10" placeholder="Adicione uma descrição. 1024 caractere (opcional)"></textarea>
-                <label for="video">Video(link)</label>
-                <input type="url" name="video" id="video" placeholder="Adicione um video" autocomplete="off">
-                
+                <label for="video">Compartilhe um video(Youtube)</label>
+                <input type="url" name="video" id="video" placeholder="Adicione um video (https://youtu.be/)" title="somente links do Youtube" autocomplete="off">
                 <div id="formBtn">
-                    <button>Limpar</button>
-                    <button id="svCr" disabled>Salvar</button>
+                    <button type="reset">Limpar</button>
+                    <button type="submit" id="svCr" disabled>Salvar</button>
                 </div>
-            <!-- </form> -->
+            </form>
         </section>
 
         <div id="divisor"></div>
@@ -104,5 +108,38 @@
             </aside>
         </section>
     </main>
+
+    <div id="vanderlay">
+        <!-- <div id="tipOpn">
+            <div id="h4">
+                    <h4>Grid cs Flex-box</h4>
+                    <p class="opnTipClass"><b>Linguagem/Skill: </b>CSS</p>
+                    <p class="opnTipClass"><b>Categoria: </b>FrontEnd</p>
+                </div>
+                <div id="opnP">                 
+                    <p class="opnDesc">A diferença crucial entre Flex-box e grid, 
+                        alem do primeiro ser unidimensional e o outro bidimencional,
+                        é que o controle do layout do grid vem do container e no Flex-box 
+                        vem dos elementosA diferença crucial entre Flex-box e grid, 
+                        alem do primeiro ser unidimensional e o outro bidimencional,
+                        é que o controle do layout do grid vem do container e no Flex-box 
+                        vem dos elementosA diferença crucial entre Flex-box e grid, 
+                        alem do primeiro ser unidimensional e o outro bidimencional,
+                        é que o controle do layout do grid vem do container e no Flex-box 
+                        vem dos elementosA diferença crucial entre Flex-box e grid, 
+                        alem do primeiro ser unidimensional e o outro bidimencional,
+                        é que o controle do layout do grid vem do container e no Flex-box 
+                        vem dos elementosA diferença crucial 
+                    </p>
+            </div>
+            <div id="opnTipVideo">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/1ORLBdqdx84" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div id="opnTipbtn">
+                <button class="tipbtn" id="del"></button>
+                <button class="tipbtn" id="edit"></button>
+            </div>
+        </div> -->
+    </div>
 </body>
 </html>

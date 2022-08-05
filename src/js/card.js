@@ -6,10 +6,10 @@ export default class Card{
         this.skill = skill;
         this.cat = cat;
         this.desc = desc;
-        this.hLink = hLink;
+        this.hLink = chkLink(hLink);
     }
 
-    makecard(obj = new Card()){
+    makecard(obj = new Card(), i){
         const asideBx = document.getElementById("tipBoard");
         const overlayDiv = document.createElement("div");
         const tipCard = document.createElement("div");
@@ -18,11 +18,10 @@ export default class Card{
         const cardCat = document.createElement("p");
         const descAside = document.createElement("aside");
         const cardDesc = document.createElement("p");
-        //        const cardLink = document.createElement("??");
         const divBtn = document.createElement("div");
         const btnDel = document.createElement("button");
-        const btnEdit = document.createElement("button");;
-        const btnVideo = document.createElement("button");
+        const btnEdit = document.createElement("button");
+        const btnVideo = document.createElement("a");
 
         overlayDiv.className = "overlay";
         tipCard.className = "tip";
@@ -37,8 +36,6 @@ export default class Card{
         btnEdit.id = "edit";
         btnVideo.className = "tipbtn";
         btnVideo.id = "video";
-
-        tipCard.append(overlayDiv);
 
         cardTitle.innerHTML = obj.title;
         tipCard.append(cardTitle);
@@ -59,6 +56,15 @@ export default class Card{
         descAside.append(cardDesc);
         tipCard.append(descAside);
 
+        const btn = document.createElement("button");
+        btn.id = "videoBtn";
+        if(obj.hLink != "" && obj.hLink != true){
+            btnVideo.href = obj.hLink;
+            btnVideo.target = "_blank";
+            btnVideo.rel = "noopener noreferrer";
+        }
+        btnVideo.appendChild(btn)
+
         divBtn.append(btnDel);
         divBtn.append(btnEdit);
         divBtn.append(btnVideo);
@@ -66,16 +72,110 @@ export default class Card{
 
         asideBx.appendChild(tipCard);
 
-        this.saveTst(this);
+        overlayDiv.id = i;
+        btnDel.name = i;
+        tipCard.appendChild(overlayDiv);
+    }
 
-        overlayDiv.id = (cardVt.length - 1).toString();
+    openCard(obj = new Card()){
+        const overDiv = document.getElementById("vanderlay");
+        const opnTipDiv = document.createElement("div");
+        const opnInfoDiv = document.createElement("div");
+        const opnCardTitle = document.createElement("h4");
+        const opnCardSkill = document.createElement("p");        
+        const opnCardCat = document.createElement("p");
+        const opnDivDesc = document.createElement("div");
+        const opnCardDesc = document.createElement("p");
+        const cardLink = document.createElement("div");
+        const opnDivBtn = document.createElement("div");
+        const opnBtnDel = document.createElement("button");
+        const opnBtnEdit = document.createElement("button");
+
+        opnTipDiv.id = "tipOpn";
+        opnInfoDiv.id = "h4";
+        opnCardSkill.className = "opnTipClass";
+        opnCardCat.className = "opnTipClass";
+        opnDivDesc.id = "opnP";
+        opnCardDesc.className = "opnDesc";
+        cardLink.id = "opnTipVideo";
+        opnDivBtn.id = "opnTipbtn";
+        opnBtnDel.className = "tipbtn";
+        opnBtnDel.id = "del";
+        opnBtnEdit.className = "tipbtn";
+        opnBtnEdit.id = "edit";
+
+        opnCardTitle.innerHTML = obj.title;
+        opnInfoDiv.append(opnCardTitle);
+        opnTipDiv.append(opnInfoDiv)
+        overDiv.appendChild(opnTipDiv)
+
+        const strongSkill = document.createElement("strong");
+        strongSkill.innerText = "Skill: ";
+        opnCardSkill.append(strongSkill);
+        opnCardSkill.innerHTML += obj.skill;
+        opnInfoDiv.append(opnCardSkill);
+        
+        const strongCat = document.createElement("strong");
+        strongCat.innerText = "Categoria: ";
+        opnCardCat.append(strongCat);
+        opnCardCat.innerHTML += obj.cat;
+        opnInfoDiv.append(opnCardCat);
+
+        opnTipDiv.append(opnDivDesc);
+        opnCardDesc.innerHTML = obj.desc;
+        opnDivDesc.append(opnCardDesc);
+
+        if(obj.hLink != "" && obj.hLink != true){
+            console.log(typeof obj.hLink)
+            const videoIframe = document.createElement("iframe");
+            videoIframe.width = "560";
+            videoIframe.height= "315";
+            videoIframe.src = obj.hLink;
+            videoIframe.title = "YouTube video player";
+            videoIframe.frameBorder = "0";
+            videoIframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+            videoIframe.allowFullscreen = true;
+
+            cardLink.appendChild(videoIframe);
+        }
+        opnTipDiv.append(cardLink);
+
+        opnTipDiv.append(opnDivBtn);
+        opnDivBtn.append(opnBtnDel);
+        opnDivBtn.append(opnBtnEdit);
     }
 
     saveTst(obj = new Card()){
         cardVt.push(obj);
     }
+}
 
-    openCard(){
-        console.log("ABRIU!")
+export function chkLink(url = new URL()){
+    // console.log(url, url.origin, new URL("https://www.youtube.com").origin) //assert
+    if(url != ""){
+        url = new URL(url);
+        if(url.origin == new URL("https://www.youtube.com").origin){
+            let link = "";
+            for(let i = 3; i < 14; i++)
+            {
+                link += url.search.charAt(i);
+            }
+            return url.origin + "/embed/" + link;
+        }
+        else if(url.origin == new URL("https://youtu.be").origin)
+        {
+            console.log("3")
+            let link = "https://www.youtube.com" + "/embed" + url.pathname
+
+            return link;
+        }else{
+            return false
+        }
     }
+    else
+        return true
+}
+
+export function deleteFromList(i){
+    cardVt.splice(i, 1);
 }
