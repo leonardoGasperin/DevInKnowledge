@@ -29,6 +29,8 @@ addEventListener("click", () => {
 })
 
 addEventListener("click", (e) => {
+    ///TODO
+      //mudar para switch()
     if(e.target.className == "overlay"){
         cardVt[Number(e.target.id)].openCard(cardVt[Number(e.target.id)]);
         document.getElementById("vanderlay").style.display = "flex";
@@ -101,10 +103,43 @@ document.getElementById("forms").addEventListener("submit", (e) => {
 })
 
 function updateScreem(){
-    document.getElementById("tipBoard").innerHTML = ""
+    document.getElementById("tipBoard").innerHTML = "";
+    const totalVl = document.getElementById("total");
+    const frontVl = document.getElementById("fE");
+    const backVl = document.getElementById("bE");
+    const fullStcVl = document.getElementById("fS");
+    const softVl = document.getElementById("stS");
+
+    totalVl.innerText = 0;
+    frontVl.innerText = 0;
+    backVl.innerText = 0;
+    fullStcVl.innerText = 0;
+    softVl.innerText = 0;
+
     cardVt.filter((cards, i) => {
         if(cards.title.toLocaleLowerCase().includes(shrch.value.toLocaleLowerCase()))
             cards.makecard(cards, i.toString())
+
+        switch (cards.cat) {
+            case "FrontEnd":
+                frontVl.innerText = Number(frontVl.innerText) + 1;
+                totalVl.innerText = Number(totalVl.innerText) + 1;
+                break;
+            case "BackEnd":
+                backVl.innerText = Number(backVl.innerText) + 1;
+                totalVl.innerText = Number(totalVl.innerText) + 1;
+                break;
+            case "FullStack":
+                fullStcVl.innerText = Number(fullStcVl.innerText) + 1;
+                totalVl.innerText = Number(totalVl.innerText) + 1;
+                break;
+            case "SoftSkill":
+                softVl.innerText = Number(softVl.innerText) + 1;
+                totalVl.innerText = Number(totalVl.innerText) + 1;
+                break;
+            default:
+                break;
+        }
     })
 
     if(cardVt.length > 4){

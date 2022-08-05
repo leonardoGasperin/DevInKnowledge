@@ -80,6 +80,7 @@ export default class Card{
     }
 
     openCard(obj = new Card()){
+
         const overDiv = document.getElementById("vanderlay");
         const opnTipDiv = document.createElement("div");
         const opnInfoDiv = document.createElement("div");
