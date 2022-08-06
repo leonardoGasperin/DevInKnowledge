@@ -58,8 +58,8 @@ addEventListener("click", (e) => {
         if(confirm(`reamente deseja deletar a Tip ${cardVt[Number(e.target.name)].title}`)){
             deleteFromList(Number(e.target.name));
             saveCards();
-            document.getElementById("tipOpn").outerHTML = "";
             if(document.getElementById("vanderlay").style.display == "flex"){
+                document.getElementById("tipOpn").outerHTML = "";
                 document.getElementById("vanderlay").style.display = "none";
             }
             updateScreem();
@@ -136,6 +136,7 @@ btnSv.addEventListener("click", () => {
             card.saveTst(card);
             saveCards();
             alert(`A tip ${title.value} foi salva com sucesso!`);
+            video.value = ""
             updateScreem();
         }
     else{
@@ -145,11 +146,11 @@ btnSv.addEventListener("click", () => {
 
 document.getElementById("forms").addEventListener("submit", (e) => {
     e.preventDefault();
-    // title.value = "";
-    // skill.value = "";
-    // category.selectedIndex = 0;
-    // desc.value = "";
-    // video.value = "";  
+    title.value = "";
+    skill.value = "";
+    category.selectedIndex = 0;
+    desc.value = "";
+    video.value = "";  
 })
 
 function updateScreem(){
@@ -216,10 +217,12 @@ function loadCards(){
     
         _temp.forEach(element => {
             element.hLink = (element.hLink == "" || element.hLink == undefined || element.hLink == true) ?  "" : element.hLink;
-            console.log(element.hLink)
-            console.log(chkLink(element.hLink))
+            // console.log(element.hLink)
+            // console.log(chkLink(element.hLink))
             
             cardVt.push(new Card(element.title, element.skill, element.cat, element.desc, element.hLink));
         });
     }
 }
+
+updateScreem();

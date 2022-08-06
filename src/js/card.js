@@ -160,29 +160,37 @@ export default class Card{
 }
 
 export function chkLink(url = new URL(), editChck = false){
-    // console.log(url, url.origin, new URL("https://www.youtube.com").origin) //assert
+    //console.log(url, url.origin, new URL("https://www.youtube.com").origin) //assert
+
     if(chrckUrl(url)){
         if(url != "" ){
             url = new URL(url);
-
-            {if(url.origin == new URL("https://www.youtube.com").origin){
-                let link = "";
-                for(let i = 3; i < 14; i++)
-                {
-                    link += url.search.charAt(i);
-                }
-                return url.origin + "/embed/" + link;
-            }
-            else if(url.origin == new URL("https://youtu.be").origin)
+            if(/*url.pathname.length < 6 ||*/ url.pathname != "/embed/.*")
             {
-                //console.log("3")
-                let link = "https://www.youtube.com" + "/embed" + url.pathname
+                console.log(url.pathname)
+                if(url.origin == new URL("https://www.youtube.com").origin && url.pathname == "/watch"){
+                    console.log("EMTRUO\t"+url.pathname)    
+                    let link = "";
+                    for(let i = 3; i < 14; i++)
+                    {
+                        link += url.search.charAt(i);
+                    }
+                    // console.log("LINK--> " +link)
+                    // console.log("RETURN--> " +url.origin + "/embed/" + link)
+                    return url.origin + "/embed/" + link;
+                }
+                else if(url.origin == new URL("https://youtu.be").origin)
+                {
+                    //console.log("3")
+                    let link = "https://www.youtube.com" + "/embed" + url.pathname
 
-                //console.log(link)
-                return link;
-            }else{
-                return false
-            }}
+                    //console.log(link)
+                    return link;
+                }else{console.log("errou"+url); 
+                    return url
+                }
+        }else{console.log(url); 
+            return url;}
         }else
             return true
     }else{
