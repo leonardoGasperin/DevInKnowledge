@@ -141,7 +141,7 @@ export default class Card{
             videoIframe.height= "315";
             videoIframe.src = obj.hLink;
             videoIframe.title = "YouTube video player";
-            videoIframe.frameBorder = "0";
+            videoIframe.frameBorder = "0";//incorporar do youtube usa
             videoIframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
             videoIframe.allowFullscreen = true;
 
@@ -175,8 +175,6 @@ export function chkLink(url = new URL(), editChck = false){
                     {
                         link += url.search.charAt(i);
                     }
-                    // console.log("LINK--> " +link)
-                    // console.log("RETURN--> " +url.origin + "/embed/" + link)
                     return url.origin + "/embed/" + link;
                 }
                 else if(url.origin == new URL("https://youtu.be").origin)

@@ -30,8 +30,6 @@ addEventListener("change", () => {
     }
 })
 
-
-
 addEventListener("click", () => {
     if(title.value != "" && title.value != undefined && title.value.length >= 8 && skill.value != "" && skill.value.length >= 2
                          && category.selectedIndex != 0 && (desc.value == "" || desc.value.length >= 16) && chkLink(video.value))
@@ -106,6 +104,7 @@ addEventListener("click", (e) => {
     else if(e.target.id == "editlay" || e.target.id == "delEditor"){
         document.getElementById("tipEditor").outerHTML = "";
         console.log(document.getElementById("tipOpn"))
+        document.getElementById("editlay").style.display = "none";
         
         updateScreem();
     }
@@ -136,7 +135,7 @@ btnSv.addEventListener("click", () => {
             card.saveTst(card);
             saveCards();
             alert(`A tip ${title.value} foi salva com sucesso!`);
-            video.value = ""
+            //video.value = ""
             updateScreem();
         }
     else{
