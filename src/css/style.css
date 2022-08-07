@@ -1,36 +1,12 @@
+/* corpo da pagina */
 body{
     background-color:lightgrey;
 }
 
-#vanderlay{
-    position:fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: #888888;
-    width: 99vw;
-    height: 99vh;
-    opacity: .95;
-    display: none;
-}
-
-#editlay{
-    position:fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: #888888;
-    width: 99vw;
-    height: 99vh;
-    opacity: .95;
-    display: none;
-}
-
-input{
-    border-radius: 5px;
-}
+/* #header{
+    ///TODO
+      //fazer um header para pagina
+} */
 
 main{
     margin-top: 15vh;
@@ -42,6 +18,7 @@ main{
     justify-content: center;
 }
 
+/* painel esquerdo */
 #left{
     background-color: #2A0D5D;
     color: white;
@@ -51,33 +28,34 @@ main{
     justify-content: center;
 }
 
-h1{
-    margin-left: 50px;
-}
-
 header{
     display: flex;
 }
 
-/* #header{
-    ///TODO
-      //fazer um header para pagina
-} */
+h1{
+    margin-left: 10px;
+}
 
-header > img{
+#mainHeader img{
     margin-left: 15px;
     margin-top: 10px;
     width: 75px;
     height: 75px;
 }
 
-h1{
-    margin-top: 0px;
-    margin-left: 10px;
-}
-
 h1 > span{
     font-size: small;
+}
+
+#required{
+    margin-left: 50px;
+    font-size: xx-small;
+}
+
+.required{
+    color: red;
+    margin-left: 7px;
+    margin-right: 7px;
 }
 
 #left input{
@@ -95,7 +73,7 @@ h1 > span{
     margin-top: 7.5px;
 }
 
-formforms input:invalid{
+form input:invalid{
     border-color: red;
 }
 form input:valid{
@@ -108,22 +86,11 @@ form textarea:valid{
     border-color: green;
 }
 
-#formBtn{
+#formBtnDiv{
     margin-top: 25px;
     display: flex;
     justify-content: center;
     gap: 25px;
-}
-
-#required{
-    margin-left: 50px;
-    font-size: xx-small;
-}
-
-.required{
-    color: red;
-    margin-left: 7px;
-    margin-right: 7px;
 }
 
 #left button{
@@ -139,20 +106,21 @@ form textarea:valid{
     margin-top: 7.5px;
     resize: none;
 }
+/* fim do painel esquerdo */
 
-/* divisor */
+/* divisor indicando limite do painel na tela*/
 #divisor{
     width: 2px;
     height: 612px;
     background-color: #000000;
 }
 
-/* right side */
+/* painel direito */
 #right{
     background-color: #2A0D5D  ;
 }
 
-#cards{
+#status{
     margin-top: 5px;
     margin-bottom: 0px;
     display: flex;
@@ -162,7 +130,7 @@ form textarea:valid{
     margin-left: 7px;
 }
 
-.card{
+.statusCard{
     height: 50px;
     box-shadow: 0 2px 2px 0 #000000;
     background-color: #f0f0f0;
@@ -170,6 +138,11 @@ form textarea:valid{
     transition: 0.3s;
     padding: .5em;
     text-align: center;
+}
+
+h4{
+    margin: 0px;
+    overflow-wrap: break-word;
 }
 
 #search{    
@@ -182,14 +155,7 @@ form textarea:valid{
     max-width: 375px;
 }
 
-
-.tipC{
-    margin-top: 0px;
-    margin-bottom: 12px;
-}
-
-/*CARTOES*/
-#tipBoard{
+#tipBoard{/*aside onde contem os tips cards*/
     display: flex;
     background-color: dimgrey;
     margin-top: 15px;
@@ -200,154 +166,4 @@ form textarea:valid{
     max-width: 425px;
     max-height: 464px;
     flex-wrap: wrap;
-}
-
-.tip{
-    height: 210px;
-    width: 180px;
-    box-shadow: 0 2px 2px 0 #000000;
-    background-color: #f0f0f0;
-    border-radius: 5px;
-    transition: 0.3s;
-    margin-top: 5px;
-    margin-left: 5px;
-    padding: .5em;
-
-    position: relative;
-    text-align: center;
-    display:flex;
-    flex-direction: column;
-}
-
-.tipClass{
-    margin-top: -1px;
-    margin-bottom: 7px;
-    text-align: left;
-    font-size: 12px;
-    overflow-wrap: break-word;
-}
-h4{
-    margin: 0px;
-    overflow-wrap: break-word;
-}
-
-.tipAside{
-    overflow-y: hidden;
-    width: 180px;
-    height: 105px;
-}
-
-.desc{
-    margin-top: 0px;
-    margin-bottom: 0px;
-    text-align: left;
-    font-size: 12px;
-    overflow-wrap: break-word;
-}
-
-#tipbtn{
-    margin-top: 20px;
-    display: flex;
-    flex-direction: row;
-    justify-content: right;
-    gap: 5px;
-}
-
-#videoBtn{
-    height: 100%;
-}
-
-.overlay{
-    position:absolute;
-    background: rgba(25, 0, 0, 0);
-    width: 180px;
-    height: 175px;
-}
-
-/*CARTAO aberto*/
-#tipOpn, #tipEditor{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-
-    margin-left: 35vw;
-    margin-top: 5rem;
-
-    width: 450px;
-    height: 840px;
-
-    box-shadow: 0 2px 2px 0 #000000;
-    background-color: #ffffff;
-    border-radius: 5px;
-    opacity: 1;
-}
-
-#h4{
-    display: flex;
-    flex-direction: column;
-    justify-content:center;
-    margin-bottom: 25px;
-}
-
-#h4 h4{
-    display: flex;
-    justify-content:center;
-    margin-top: 15px;
-    margin-bottom: 35px;
-    
-}
-
-.opnTipClass{
-    text-align: left;
-    font-size: 12px;
-
-    margin-top: 5px;
-    display: flex;
-    justify-content:center;
-}
-
-#opnP{
-    /* overflow-y:scroll; */
-    overflow-x: hidden;
-    max-width: 445px;
-    max-height: 350px;
-
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.opnDesc{
-    /* background-color: #2A0D5D; */
-    
-    margin-top: 0px;
-    margin-left: 10%;
-    margin-right: 10%;
-
-    width: 344px;
-    height: 255px;
-
-    display: flex;
-    justify-content: center;
-    word-break: break-all;
-    overflow-wrap: break-word;
-}
-
-#opnTipVideo{
-    margin-top: 20px;
-    margin-bottom: 25px;
-    margin-left: 25%;
-    margin-right: 25%;
-    display: flex;
-    justify-content: center;
-}
-
-#opnTipbtn{
-    display: flex;
-    flex-direction: row;
-    justify-content: right;
-    gap: 25px;
-    margin-top: 15px;
-    margin-bottom: 30px;
-    margin-right: 35px;
 }

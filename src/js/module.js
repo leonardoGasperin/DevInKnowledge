@@ -105,7 +105,7 @@ addEventListener("click", (e) => {
         document.getElementById("tipEditor").outerHTML = "";
         console.log(document.getElementById("tipOpn"))
         document.getElementById("editlay").style.display = "none";
-        
+
         updateScreem();
     }
     else if(e.target.id == "srchApply"){
@@ -224,4 +224,6 @@ function loadCards(){
     }
 }
 
+
+console.log(new URL("https://youtu.be/mUSn1Jqdv4k").pathname)
 updateScreem();

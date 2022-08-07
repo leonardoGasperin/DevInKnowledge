@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/cardsStyle.css">
+    <link rel="stylesheet" href="./css/OpenedCardsStyle.css">
     <link rel="shortcut icon" href="./img/favicon/meufav.ico" type="image/x-icon">
     <script src="./js/module.js" type="module"></script>
 
@@ -22,7 +24,7 @@
 
     <main id="panel">
         <section id="left">
-            <header>
+            <header id="mainHeader">
                 <img src="./img/favicon/meufav.ico" alt="">
                 <h1>
                     <span id="dev">DEV</span>inKnowledge 
@@ -49,7 +51,7 @@
                 <textarea name="desc" id="desc" minlength="16" maxlength="1024" cols="46" rows="10" placeholder="Adicione uma descrição. 1024 caractere (opcional)"></textarea>
                 <label for="video">Compartilhe um video(Youtube)</label>
                 <input type="url" name="video" id="video" placeholder="Adicione um video (https://youtu.be/)" title="somente links do Youtube" minlength="25" autocomplete="off">
-                <div id="formBtn">
+                <div id="formBtnDiv">
                     <button type="reset">Limpar</button>
                     <button type="submit" id="svCr" disabled>Salvar</button>
                 </div>
@@ -59,26 +61,26 @@
         <div id="divisor"></div>
 
         <section id="right">
-            <div id="cards">
-                <div class="card">
-                    <h4 class="tipC">Total</h4>
-                    <p class="cardTx" id="total">38</p>
+            <div id="status">
+                <div class="statusCard">
+                    <h4 class="statusCat">Total</h4>
+                    <p class="statusCardTx" id="total">38</p>
                 </div>
-                <div class="card">
-                    <h4i class="tipC"><b>FrontEnd</b></h4>
-                    <p class="cardTx" id="fE">38</p>
+                <div class="statusCard">
+                    <h4i class="statusCat"><b>FrontEnd</b></h4>
+                    <p class="statusCardTx" id="fE">38</p>
                 </div>
-                <div class="card">
-                    <h4 class="tipC">BackEnd</h4>
-                    <p class="cardTx" id="bE">12</p>
+                <div class="statusCard">
+                    <h4 class="statusCat">BackEnd</h4>
+                    <p class="statusCardTx" id="bE">12</p>
                 </div>
-                <div class="card">
-                    <h4 class="tipC">FullStack</h4>
-                    <p class="cardTx" id="fS">5</p>
+                <div class="statusCard">
+                    <h4 class="statusCat">FullStack</h4>
+                    <p class="statusCardTx" id="fS">5</p>
                 </div>
-                <div class="card">
-                    <h4 class="tipC">SoftSkill</h4>
-                    <p class="cardTx" id="stS">14</p>
+                <div class="statusCard">
+                    <h4 class="statusCat">SoftSkill</h4>
+                    <p class="statusCardTx" id="stS">14</p>
                 </div>
             </div>
 

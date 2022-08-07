@@ -1,0 +1,57 @@
+.tip{
+    height: 210px;
+    width: 180px;
+    box-shadow: 0 2px 2px 0 #000000;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    transition: 0.3s;
+    margin-top: 5px;
+    margin-left: 5px;
+    padding: .5em;
+
+    position: relative;
+    text-align: center;
+    display:flex;
+    flex-direction: column;
+}
+
+.tipP{
+    margin-top: -1px;
+    margin-bottom: 7px;
+    text-align: left;
+    font-size: 12px;
+    overflow-wrap: break-word;
+}
+
+.AsideDesc{
+    overflow-y: hidden;
+    width: 180px;
+    height: 105px;
+}
+
+.desc{
+    margin-top: 0px;
+    margin-bottom: 0px;
+    text-align: left;
+    font-size: 12px;
+    overflow-wrap: break-word;
+}
+
+#tipBtnDiv{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    gap: 5px;
+}
+
+#videoBtn{
+    height: 100%;
+}
+
+.overlay{
+    position:absolute;
+    background: rgba(25, 0, 0, 0);
+    width: 180px;
+    height: 175px;
+}

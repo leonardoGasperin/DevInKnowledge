@@ -27,11 +27,11 @@ export default class Card{
 
         overlayDiv.className = "overlay";
         tipCard.className = "tip";
-        cardSkill.className = "tipClass";
-        cardCat.className = "tipClass";
-        descAside.className = "tipAside";
+        cardSkill.className = "tipP";
+        cardCat.className = "tipP";
+        descAside.className = "AsideDesc";
         cardDesc.className = "desc";
-        divBtn.id = "tipbtn";
+        divBtn.id = "tipBtnDiv";
         btnDel.className = "tipbtn";
         btnDel.id = "del";
         btnEdit.className = "tipbtn";
@@ -90,18 +90,18 @@ export default class Card{
         const opnCardCat = document.createElement("p");
         const opnDivDesc = document.createElement("div");
         const opnCardDesc = document.createElement("p");
-        const cardLink = document.createElement("div");
+        const opnCardLink = document.createElement("div");
         const opnDivBtn = document.createElement("div");
         const opnBtnDel = document.createElement("button");
         const opnBtnEdit = document.createElement("button");
 
         opnTipDiv.id = "tipOpn";
-        opnInfoDiv.id = "h4";
-        opnCardSkill.className = "opnTipClass";
-        opnCardCat.className = "opnTipClass";
-        opnDivDesc.id = "opnP";
+        opnInfoDiv.id = "titleOpenCard";
+        opnCardSkill.className = "opnTipP";
+        opnCardCat.className = "opnTipP";
+        opnDivDesc.id = "opnDescDiv";
         opnCardDesc.className = "opnDesc";
-        cardLink.id = "opnTipVideo";
+        opnCardLink.id = "opnTipVideo";
         opnDivBtn.id = "opnTipbtn";
         opnBtnDel.className = "tipbtn";
         opnBtnDel.name = i;
@@ -145,9 +145,9 @@ export default class Card{
             videoIframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
             videoIframe.allowFullscreen = true;
 
-            cardLink.appendChild(videoIframe);
+            opnCardLink.appendChild(videoIframe);
         }
-        opnTipDiv.append(cardLink);
+        opnTipDiv.append(opnCardLink);
 
         opnTipDiv.append(opnDivBtn);
         opnDivBtn.append(opnBtnDel);
@@ -160,35 +160,34 @@ export default class Card{
 }
 
 export function chkLink(url = new URL(), editChck = false){
-    //console.log(url, url.origin, new URL("https://www.youtube.com").origin) //assert
+    //console.log(url, new URL("https://www.youtube.com").origin) //assert
 
     if(chrckUrl(url)){
         if(url != "" ){
             url = new URL(url);
-            if(/*url.pathname.length < 6 ||*/ url.pathname != "/embed/.*")
-            {
-                console.log(url.pathname)
+            if(url.pathname != "/embed/.*"){//necessario, caso queira tirar ou trocar link do video ou manter, sem perder o dado de search do link, ao ter loads
                 if(url.origin == new URL("https://www.youtube.com").origin && url.pathname == "/watch"){
-                    console.log("EMTRUO\t"+url.pathname)    
                     let link = "";
-                    for(let i = 3; i < 14; i++)
-                    {
+
+                    for(let i = 3; i < 14; i++){
                         link += url.search.charAt(i);
                     }
+
                     return url.origin + "/embed/" + link;
                 }
-                else if(url.origin == new URL("https://youtu.be").origin)
-                {
-                    //console.log("3")
+                else if(url.origin == new URL("https://youtu.be").origin){
                     let link = "https://www.youtube.com" + "/embed" + url.pathname
 
-                    //console.log(link)
                     return link;
-                }else{console.log("errou"+url); 
-                    return url
+                }else{
+                    if(url.origin == new URL("https://www.youtube.com").origin){
+                        return url;
+                    }
+                    return false;
                 }
-        }else{console.log(url); 
-            return url;}
+            }else{
+                return url;
+            }
         }else
             return true
     }else{
@@ -199,16 +198,16 @@ export function chkLink(url = new URL(), editChck = false){
     }
 }
 
-export function editMode(i){
+export function editMode(i){//cria HTML para edição
     const overDiv = document.getElementById("editlay");
-    const opnTipDiv = document.createElement("div");
-    const opnInfoDiv = document.createElement("div");
+    const editTipDiv = document.createElement("div");
+    const editInfoDiv = document.createElement("div");
     const labelTitle = document.createElement("label");
-    const opnCardTitle = document.createElement("input");
+    const editCardTitle = document.createElement("input");
     const labelSkill = document.createElement("label");
-    const opnCardSkill = document.createElement("input");        
+    const editCardSkill = document.createElement("input");        
     const labelCat = document.createElement("label");
-    const opnCardCat = document.createElement("select");
+    const editCardCat = document.createElement("select");
 
     const fECat = document.createElement("option");
     const bECat = document.createElement("option");
@@ -216,40 +215,40 @@ export function editMode(i){
     const stSCat = document.createElement("option");
 
     const labelDesc = document.createElement("label");
-    const opnDivDesc = document.createElement("div");
-    const opnCardDesc = document.createElement("textarea");
+    const editDivDesc = document.createElement("div");
+    const editCardDesc = document.createElement("textarea");
     const cardLinkDiv = document.createElement("div");
     const labelLink = document.createElement("label");
     const cardLink = document.createElement("input")
-    const opnDivBtn = document.createElement("div");
-    const opnBtnDel = document.createElement("button");
-    const opnBtnEdit = document.createElement("button");
+    const editDivBtn = document.createElement("div");
+    const editBtnDel = document.createElement("button");
+    const editBtnEdit = document.createElement("button");
 
-    opnTipDiv.id = "tipEditor";
-    opnInfoDiv.id = "h4";
+    editTipDiv.id = "tipEditor";
+    editInfoDiv.id = "titleOpenCard";
 
     labelTitle.htmlFor = "labelTitle";
-    opnCardTitle.name = "labelTitle";
-    opnCardTitle.id = "labelTitle";
+    editCardTitle.name = "labelTitle";
+    editCardTitle.id = "labelTitle";
     labelTitle.innerHTML = "Titulo";
 
     labelSkill.htmlFor = "labelSkill";
-    opnCardSkill.name = "labelSkill";
-    opnCardSkill.id = "labelSkill";
-    opnCardSkill.className = "opnTipClass";
+    editCardSkill.name = "labelSkill";
+    editCardSkill.id = "labelSkill";
+    editCardSkill.className = "opnTipP";
     labelSkill.innerHTML ="Skill";
     
     labelCat.htmlFor = "labelCat";
-    opnCardCat.name = "labelCat";
-    opnCardCat.id = "labelCat";
-    opnCardCat.className = "opnTipClass";
+    editCardCat.name = "labelCat";
+    editCardCat.id = "labelCat";
+    editCardCat.className = "opnTipClass";
     labelCat.innerHTML = "Categoria"
 
-    opnDivDesc.id = "opnP";
+    editDivDesc.id = "opnDescDiv";
     labelDesc.htmlFor = "labelDesc";
-    opnCardDesc.name = "labelDesc";
-    opnCardDesc.id = "labelDesc";
-    opnCardDesc.className = "opnDesc";
+    editCardDesc.name = "labelDesc";
+    editCardDesc.id = "labelDesc";
+    editCardDesc.className = "opnDesc";
     labelDesc.innerHTML = "Descrição";
     
     cardLinkDiv.id = "opnTipVideo";
@@ -258,48 +257,48 @@ export function editMode(i){
     cardLink.id = "labelLink";
     labelLink.innerHTML = "Compartilhe um video(Youtube)";
 
-    opnDivBtn.id = "opnTipbtn";
-    opnBtnDel.className = "tipbtn";
-    opnBtnDel.name = i;
-    opnBtnDel.id = "delEditor";
-    opnBtnEdit.className = "tipbtn";
-    opnBtnEdit.name = i;
-    opnBtnEdit.id = "editEditor";
+    editDivBtn.id = "opnTipbtn";
+    editBtnDel.className = "tipbtn";
+    editBtnDel.name = i;
+    editBtnDel.id = "delEditor";
+    editBtnEdit.className = "tipbtn";
+    editBtnEdit.name = i;
+    editBtnEdit.id = "editEditor";
 
-    opnCardTitle.minLength= 8;
-    opnCardTitle.maxlength = 16;
-    opnCardTitle.required = true;
-    opnCardTitle.value = cardVt[i].title;
-    opnInfoDiv.append(labelTitle);
-    opnInfoDiv.append(opnCardTitle);
-    opnTipDiv.append(opnInfoDiv)
-    overDiv.appendChild(opnTipDiv)
+    editCardTitle.minLength= 8;
+    editCardTitle.maxlength = 16;
+    editCardTitle.required = true;
+    editCardTitle.value = cardVt[i].title;
+    editInfoDiv.append(labelTitle);
+    editInfoDiv.append(editCardTitle);
+    editTipDiv.append(editInfoDiv)
+    overDiv.appendChild(editTipDiv)
 
-    opnCardTitle.minLength= 2;
-    opnCardTitle.maxlength = 16;
-    opnCardTitle.required = true;
-    opnCardSkill.value = cardVt[i].skill;
-    opnInfoDiv.append(labelSkill);
-    opnInfoDiv.append(opnCardSkill);
+    editCardTitle.minLength= 2;
+    editCardTitle.maxlength = 16;
+    editCardTitle.required = true;
+    editCardSkill.value = cardVt[i].skill;
+    editInfoDiv.append(labelSkill);
+    editInfoDiv.append(editCardSkill);
 
     fECat.innerHTML = "FrontEnd";
-    opnCardCat.appendChild(fECat);
+    editCardCat.appendChild(fECat);
     bECat.innerHTML = "BackEnd";
-    opnCardCat.appendChild(bECat);
+    editCardCat.appendChild(bECat);
     fSCat.innerHTML = "FullStack";
-    opnCardCat.appendChild(fSCat);
+    editCardCat.appendChild(fSCat);
     stSCat.innerHTML = "SoftSkill";
-    opnCardCat.appendChild(stSCat);
-    opnInfoDiv.append(labelCat);
-    opnInfoDiv.append(opnCardCat);
+    editCardCat.appendChild(stSCat);
+    editInfoDiv.append(labelCat);
+    editInfoDiv.append(editCardCat);
 
-    opnCardDesc.minLength= 16;
-    opnCardDesc.maxlength = 1024;
-    opnCardDesc.style.resize = "none";
-    opnTipDiv.append(opnDivDesc);
-    opnCardDesc.value = cardVt[i].desc;
-    opnDivDesc.append(labelDesc);
-    opnDivDesc.append(opnCardDesc);
+    editCardDesc.minLength= 16;
+    editCardDesc.maxlength = 1024;
+    editCardDesc.style.resize = "none";
+    editTipDiv.append(editDivDesc);
+    editCardDesc.value = cardVt[i].desc;
+    editDivDesc.append(labelDesc);
+    editDivDesc.append(editCardDesc);
 
     cardLink.type = "url";
     if(cardVt[i].hLink != true)
@@ -308,34 +307,37 @@ export function editMode(i){
         cardLink.value = "";
     cardLinkDiv.appendChild(labelLink);
     cardLinkDiv.appendChild(cardLink);
-    opnTipDiv.append(cardLinkDiv);
+    editTipDiv.append(cardLinkDiv);
     
-    opnTipDiv.append(opnDivBtn);
-    opnDivBtn.append(opnBtnDel);
-    opnDivBtn.append(opnBtnEdit);
+    editTipDiv.append(editDivBtn);
+    editDivBtn.append(editBtnDel);
+    editDivBtn.append(editBtnEdit);
     
-    makeEditorInd(i);
+    makeEditorInd(i);//apos a criar o ambiente de edição registra qual item do cardVt sera editado;
 }
 
 export function editing(i){
-    if(typeof i == "number"){
+    if(typeof i == "number"){//se makeEditorInd(i) for um numero as data do item recebe os novos valores.
         cardVt[i].title = document.getElementById("labelTitle").value;
         cardVt[i].skill = document.getElementById("labelSkill").value;
         cardVt[i].cat = document.getElementById("labelCat").value;
         cardVt[i].desc = document.getElementById("labelDesc").value;
 
-        if(!chrckUrl(document.getElementById("labelLink").value))
+        if(!chrckUrl(document.getElementById("labelLink").value)){//checa se é um link do youtube 
+            document.getElementById("labelLink").value = "";
+        }else
+            cardVt[i].hLink = document.getElementById("labelLink").value;
         document.getElementById("labelLink").value = "";
-        cardVt[i].hLink = document.getElementById("labelLink").value;
-        document.getElementById("labelLink").value = "";
-        i = undefined;
-}
+        
+        i = undefined;//por segurança depois daqui nao edita mais sem dar inicio a edição.
+    }
 }
 
 export function deleteFromList(i){
     cardVt.splice(i, 1);
 }
 
+//referencia(index) de quem sera editado
 function makeEditorInd(i){
     editorInd = i
 }
