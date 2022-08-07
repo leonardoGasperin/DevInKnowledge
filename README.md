@@ -8,7 +8,7 @@
 
 * Conteudo da pagina
 	* Painel esquerdo:
-		* header
+		* header //avisando que vc esta no Tip'sMaker o criador de dicas.
 			* Logo.
 			* Titulo do site.
 			* Local da pagina.
@@ -124,6 +124,13 @@
 
 * Este projeto foi feito com script type="module" e será necessario usar um simulador de servidor (live server de preferencia)
 é recomentado que a pasta "src" esteja dentro da pasta root que não tenha nenhuma pasta anterior a src (src dentro do root fora de outras pastas);
+
+### Considerations ###
+
+este projeto foi feito idealizando uma pagina montadas com o conceito de header, nav, main, aside e foot como demonstrado na imagem abaixo,
+e em si foi feito somente o main da pagina, que é somente o que o projeto pede.
+
+![Alt Imagem representando conceito de pagina](https://www.guj.com.br/uploads/default/original/3X/c/8/c8539f0dd5edc913583bd3ee445f2812f759dbe7.png)
 
 ### Who do I talk to? ###
 
