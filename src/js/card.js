@@ -2,7 +2,7 @@ export const cardVt = [];
 export let editorInd;
 
 
-export default class Card{
+export default class TipCard{
     constructor(title, skill, cat, desc, hLink){
         this.title = title;
         this.skill = skill;
@@ -11,7 +11,8 @@ export default class Card{
         this.hLink = chkLink(hLink);
     }
 
-    makecard(obj = new Card(), i){
+    makecard(obj = new TipCard(), i){//montagem do cartão basico(fechado/painel da direita)
+        //cria/prepara elementos html
         const asideBx = document.getElementById("tipBoard");
         const overlayDiv = document.createElement("div");
         const tipCard = document.createElement("div");
@@ -25,6 +26,7 @@ export default class Card{
         const btnEdit = document.createElement("button");
         const btnVideo = document.createElement("a");
 
+        //atribui seus dividos id e classe
         overlayDiv.className = "overlay";
         tipCard.className = "tip";
         cardSkill.className = "tipP";
@@ -39,6 +41,7 @@ export default class Card{
         btnVideo.className = "tipbtn";
         btnVideo.id = "video";
 
+        //monta elementos html do cartão
         cardTitle.innerHTML = obj.title;
         tipCard.append(cardTitle);
 
@@ -74,14 +77,15 @@ export default class Card{
 
         asideBx.appendChild(tipCard);
 
-        overlayDiv.id = i;
-        btnDel.name = i;
-        btnEdit.name = i;
+        //adiciona referencia do elemento no array
+        overlayDiv.id = i;//abrir cartao
+        btnDel.name = i;//deleta cartao
+        btnEdit.name = i;//edita cartao
         tipCard.appendChild(overlayDiv);
     }
 
-    openCard(obj = new Card(), i){
-
+    openCard(obj = new TipCard(), i){//montagem do cartão aberto
+        //criam/prepara elementos html
         const overDiv = document.getElementById("vanderlay");
         const opnTipDiv = document.createElement("div");
         const opnInfoDiv = document.createElement("div");
@@ -95,6 +99,7 @@ export default class Card{
         const opnBtnDel = document.createElement("button");
         const opnBtnEdit = document.createElement("button");
 
+        //atribui seus devidos id e classe
         opnTipDiv.id = "tipOpn";
         opnInfoDiv.id = "titleOpenCard";
         opnCardSkill.className = "opnTipP";
@@ -110,6 +115,7 @@ export default class Card{
         opnBtnEdit.name = i;
         opnBtnEdit.id = "edit";
 
+        //monta elementos html do cartão aberto
         opnCardTitle.innerHTML = obj.title;
         opnInfoDiv.append(opnCardTitle);
         opnTipDiv.append(opnInfoDiv)
@@ -135,7 +141,7 @@ export default class Card{
             opnTipDiv.style.overflowY = "none";
         opnDivDesc.append(opnCardDesc);
 
-        if(obj.hLink != "" && obj.hLink != true){
+        if(obj.hLink != "" && obj.hLink != true){//youtube doa este codigo em sua area de PC->compartilhamento->incorporar, porem na escrita do HTML
             const videoIframe = document.createElement("iframe");
             videoIframe.width = "560";
             videoIframe.height= "315";
@@ -154,51 +160,64 @@ export default class Card{
         opnDivBtn.append(opnBtnEdit);
     }
 
-    saveTst(obj = new Card()){
+    saveCardList(obj = new TipCard()){
         cardVt.push(obj);
     }
 }
 
-export function chkLink(url = new URL(), editChck = false){
-    //console.log(url, new URL("https://www.youtube.com").origin) //assert
-
+export function chkLink(url = new URL(), editChck = false){//checa se é um link do youtube e monta o link embed para fazer o iframe do cartao aberto
+    //assert
+        //console.log(url, new URL("https://www.youtube.com").origin)
+    
+    //checa se é um URL
     if(chrckUrl(url)){
         if(url != "" ){
             url = new URL(url);
             if(url.pathname != "/embed/.*"){//necessario, caso queira tirar ou trocar link do video ou manter, sem perder o dado de search do link, ao ter loads
-                if(url.origin == new URL("https://www.youtube.com").origin && url.pathname == "/watch"){
+                if(url.origin == new URL("https://www.youtube.com").origin && url.pathname == "/watch")
+                {//checa se é link da barra de url do navegador
                     let link = "";
 
-                    for(let i = 3; i < 14; i++){
+                    for(let i = 3; i < 14; i++)
+                    {//pega somente valor necessario para search do link
                         link += url.search.charAt(i);
                     }
 
+                    //retorna link embed para iframe do cartão aberto
                     return url.origin + "/embed/" + link;
-                }
-                else if(url.origin == new URL("https://youtu.be").origin){
+                }//caso nao seja link wtach, checa se nao é link de compartilhamento
+                else if(url.origin == new URL("https://youtu.be").origin)
+                {//monta o link enbed para iframe do cartão aberto
+
                     let link = "https://www.youtube.com" + "/embed" + url.pathname
 
                     return link;
-                }else{
-                    if(url.origin == new URL("https://www.youtube.com").origin){
+                }else{//caso contrarop
+                    if(url.origin == new URL("https://www.youtube.com").origin)
+                    {//para edição, caso usuario nao edite alguma url ja existente
                         return url;
                     }
                     return false;
                 }
-            }else{
+            }else{//para o load, caso o link youtube ja seja embed nao o altera
                 return url;
             }
-        }else
+        }else//aceita campo vazio para salvar e editar.
             return true
-    }else{
+    }else{//caso nao seja URL manda false para edit e true para criar cartão
         if(editChck)
             return false;
         else
-            return true;
+            return true;//se nao for um link nao salvara nada.
     }
 }
 
-export function editMode(i){//cria HTML para edição
+/** OBS:
+  * este "cartão" de modo de edição leva com ele nomes basicos
+  * de elementos do cartão aberto pois ele é exatamente uma
+  * copia do cartão aberto utilizando o mesmo CSS */ 
+export function editMode(i){//montagem do cartão para edição
+    //cria/prepara elementos html
     const overDiv = document.getElementById("editlay");
     const editTipDiv = document.createElement("div");
     const editInfoDiv = document.createElement("div");
@@ -207,12 +226,12 @@ export function editMode(i){//cria HTML para edição
     const labelSkill = document.createElement("label");
     const editCardSkill = document.createElement("input");        
     const labelCat = document.createElement("label");
+        //criando/preparando o select das categorias
     const editCardCat = document.createElement("select");
-
-    const fECat = document.createElement("option");
-    const bECat = document.createElement("option");
-    const fSCat = document.createElement("option");
-    const stSCat = document.createElement("option");
+    const fECat = document.createElement("option");//fE frontEnd
+    const bECat = document.createElement("option");//bE backEnd
+    const fSCat = document.createElement("option");//fS fullStack
+    const stSCat = document.createElement("option");//stS softSkill
 
     const labelDesc = document.createElement("label");
     const editDivDesc = document.createElement("div");
@@ -224,6 +243,7 @@ export function editMode(i){//cria HTML para edição
     const editBtnDel = document.createElement("button");
     const editBtnEdit = document.createElement("button");
 
+    //atribui seus devidos id, classe e nome, como tambem injetando texto nas label's
     editTipDiv.id = "tipEditor";
     editInfoDiv.id = "titleOpenCard";
 
@@ -265,6 +285,7 @@ export function editMode(i){//cria HTML para edição
     editBtnEdit.name = i;
     editBtnEdit.id = "editEditor";
 
+    //monta elementos html do cartão de edição
     editCardTitle.minLength= 8;
     editCardTitle.maxlength = 16;
     editCardTitle.required = true;
@@ -323,12 +344,12 @@ export function editing(i){
         cardVt[i].cat = document.getElementById("labelCat").value;
         cardVt[i].desc = document.getElementById("labelDesc").value;
 
-        if(!chrckUrl(document.getElementById("labelLink").value)){//checa se é um link do youtube 
-            document.getElementById("labelLink").value = "";
+        if(!chrckUrl(document.getElementById("labelLink").value)){//checa se não é um link do youtube 
+            cardVt[i].hLink = "";
         }else
             cardVt[i].hLink = document.getElementById("labelLink").value;
-        document.getElementById("labelLink").value = "";
         
+        document.getElementById("labelLink").value = "";
         i = undefined;//por segurança depois daqui nao edita mais sem dar inicio a edição.
     }
 }

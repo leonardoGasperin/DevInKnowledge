@@ -1,4 +1,4 @@
-import Card, { cardVt, chkLink, deleteFromList, editMode, editing, editorInd } from "./card.js";
+import TipCard, { cardVt, chkLink, deleteFromList, editMode, editing, editorInd } from "./card.js";
 
 const btnSv = document.getElementById("svCr");
 const title = document.getElementById("title");
@@ -124,7 +124,7 @@ btnSv.addEventListener("click", () => {
                          && category.selectedIndex != 0 && (desc.value == "" || desc.value.length >= 16))
         {
             btnSv.disabled = false;
-            const card = new Card(
+            const card = new TipCard(
                 title.value,
                 skill.value,
                 category.options[category.selectedIndex].text,
@@ -132,7 +132,7 @@ btnSv.addEventListener("click", () => {
                 video.value
             )
             
-            card.saveTst(card);
+            card.saveCardList(card);
             saveCards();
             alert(`A tip ${title.value} foi salva com sucesso!`);
             //video.value = ""
@@ -219,7 +219,7 @@ function loadCards(){
             // console.log(element.hLink)
             // console.log(chkLink(element.hLink))
             
-            cardVt.push(new Card(element.title, element.skill, element.cat, element.desc, element.hLink));
+            cardVt.push(new TipCard(element.title, element.skill, element.cat, element.desc, element.hLink));
         });
     }
 }
