@@ -70,9 +70,11 @@ export default class TipCard{
             btnVideo.rel = "noopener noreferrer";
         }
         btnVideo.appendChild(btn)
-
+        btnDel.innerHTML = "Del";
         divBtn.append(btnDel);
+        btnEdit.innerHTML = "Edit";
         divBtn.append(btnEdit);
+        btn.innerHTML = "Ytube";
         divBtn.append(btnVideo);
         tipCard.append(divBtn);
 
@@ -157,7 +159,9 @@ export default class TipCard{
         opnTipDiv.append(opnCardLink);
 
         opnTipDiv.append(opnDivBtn);
+        opnBtnDel.innerHTML = "Del";
         opnDivBtn.append(opnBtnDel);
+        opnBtnEdit.innerHTML = "Edit";
         opnDivBtn.append(opnBtnEdit);
     }
 
@@ -333,7 +337,9 @@ export function editMode(i){//montagem do cartão para edição
     editTipDiv.append(cardLinkDiv);
     
     editTipDiv.append(editDivBtn);
+    editBtnDel.innerHTML = "Cancelar";
     editDivBtn.append(editBtnDel);
+    editBtnEdit.innerHTML = "Confirmar";
     editDivBtn.append(editBtnEdit);
     
     makeEditorInd(i);//apos a criar o ambiente de edição registra qual item do cardVt sera editado;
