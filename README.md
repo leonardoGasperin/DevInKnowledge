@@ -118,7 +118,7 @@
 	- index.html
 		* pagina principal
 
-* 1.0.1 B
+* Versão: 1.0.1_B
 
 ### How do I get set up? ###
 
