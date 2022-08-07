@@ -1,13 +1,8 @@
 /* corpo da pagina */
 body{
     background-color:lightgrey;
+    min-height: 100%;
 }
-
-/* #header{
-    ///TODO
-      //fazer um header para pagina
-} */
-
 main{
     margin-top: 15vh;
 }
@@ -28,7 +23,7 @@ main{
     justify-content: center;
 }
 
-header{
+#mainHeader{
     display: flex;
 }
 
