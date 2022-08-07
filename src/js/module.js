@@ -1,5 +1,9 @@
-import TipCard, { cardVt, chkLink, deleteFromList, editMode, editing, editorInd } from "./card.js";
+/**toda logica e atualização do html é feita aqui
+ */
+import TipCard, { cardVt, chkLink} from "./card.js";
+import { updateScreem, saveCards, deletCard, callEditorMode, cancelEditor, doEditor,  } from "./meta.js";
 
+const form = document.getElementById("forms");
 const btnSv = document.getElementById("svCr");
 const title = document.getElementById("title");
 const skill = document.getElementById("skill");
@@ -8,20 +12,17 @@ const desc = document.getElementById("desc");
 const video = document.getElementById("video");
 const shrch = document.getElementById("search");
 
-addEventListener("change", () => {
-    if(title.value != "" && title.value != undefined  && title.value.length >= 8 && skill.value != "" && skill.value.length >= 2
-                         && category.selectedIndex != 0 && (desc.value == "" || desc.value.length >= 16) && chkLink(video.value))
+addEventListener("change", () => {//a cada mudança na pagina o form é checado para liberar ou nao o botao de salvar
+    if(checkForms())
         {
             btnSv.disabled = false;
         }else
             btnSv.disabled = true;
     
+    //aqui faz a mesma checagem para liberar ou nao o botão para elementos inputs no cartão de edição
     if(document.getElementById("editEditor"))
     {
-        if(document.getElementById("labelTitle").value != "" && document.getElementById("labelTitle").value != undefined  && document.getElementById("labelTitle").value.length >= 8 &&
-                         document.getElementById("labelSkill").value != "" && document.getElementById("labelSkill").value.length >= 2
-                         && (document.getElementById("labelDesc").value == "" || document.getElementById("labelDesc").value.length >= 16)
-                         && (chkLink(document.getElementById("labelLink").value, true) ||  document.getElementById("labelLink").value == ""))
+        if(checkForms(true))
         {
             document.getElementById("editEditor").disabled = false;
         }else{
@@ -30,9 +31,8 @@ addEventListener("change", () => {
     }
 })
 
-addEventListener("click", () => {
-    if(title.value != "" && title.value != undefined && title.value.length >= 8 && skill.value != "" && skill.value.length >= 2
-                         && category.selectedIndex != 0 && (desc.value == "" || desc.value.length >= 16) && chkLink(video.value))
+addEventListener("click", () => {//checa form a cada click na tela para liberar botao de salvar ou nao
+    if(checkForms())
         {
             btnSv.disabled = false;
         }
@@ -52,77 +52,48 @@ addEventListener("click", (e) => {
         document.getElementById("tipOpn").outerHTML = "";
         document.getElementById("vanderlay").style.display = "none";
     }
-    else if(e.target.id == "del"){
-        if(confirm(`reamente deseja deletar a Tip ${cardVt[Number(e.target.name)].title}`)){
-            deleteFromList(Number(e.target.name));
-            saveCards();
-            if(document.getElementById("vanderlay").style.display == "flex"){
-                document.getElementById("tipOpn").outerHTML = "";
-                document.getElementById("vanderlay").style.display = "none";
-            }
-            updateScreem();
-        }
-    }
-    else if(e.target.id == "edit"){
-        alert(`Você agora esta abrindo o Edit Mode, qualquer alteração feita feita em ${cardVt[Number(e.target.name)].title} sobrescreverá a Tip.\nTem certeza que deseja abrir o Edit Mode?`);
-        editMode(Number(e.target.name));
-        if(document.getElementById("tipOpn")){
-            console.log(e.target.id)
-                document.getElementById("tipOpn").outerHTML = "";}
-        document.getElementById("editlay").style.display = "none";
-        if(document.getElementById("vanderlay").style.display = "flex"){
-            
-            document.getElementById("vanderlay").style.display = "none";
-        }
-        document.getElementById("editlay").style.display = "flex";
-    }
-    else if(e.target.id == "delEditor"){
-        if(confirm(`Gostaria de sair do Edit Mode? Todas as informações alteradas em ${cardVt[Number(e.target.name)].title} não serão salvas`)){    
-            document.getElementById("editlay").style.display = "none";
-            document.getElementById("tipEditor").outerHTML = "";
-            if(document.getElementById("vanderlay").style.display = "flex"){
-                    document.getElementById("vanderlay").style.display = "none";
-            }
-    }
 
-    }
-    else if(e.target.id == "editEditor"){
-        if(confirm(`Tem certeza que deseja editar a tip ${cardVt[e.target.name].title}? Qualquer alteração será mantida.`)){
-            editing(editorInd);
-            saveCards();
-            updateScreem();
-            document.getElementById("editlay").style.display = "none";
+    switch (e.target.id) {
+        case "del":
+            deletCard(e.target.name);
+            break;
+        case "edit":
+            callEditorMode(e.target.name);
+            break;
+        case "delEditor":
+            cancelEditor(e.target.name);
+            break;
+        case "editEditor":
+            doEditor(e.target.name);
+            break;
+        case "editlay":
+        case "delEditor":
             document.getElementById("tipEditor").outerHTML = "";
-            
-            if(document.getElementById("vanderlay").style.display = "flex"){
-                if(document.getElementById("tipOpn"))
-                    document.getElementById("tipOpn").outerHTML = "";
-                document.getElementById("vanderlay").style.display = "none";
-            }
-        }
-    }    
-    else if(e.target.id == "editlay" || e.target.id == "delEditor"){
-        document.getElementById("tipEditor").outerHTML = "";
-        console.log(document.getElementById("tipOpn"))
-        document.getElementById("editlay").style.display = "none";
-
-        updateScreem();
-    }
-    else if(e.target.id == "srchApply"){
-        console.log("PESQUISANDO!");
-        updateScreem();
-    }
-    else if(e.target.id == "srchCls"){
-        shrch.value = "";
-        updateScreem();
+            document.getElementById("editlay").style.display = "none";
+        
+            updateScreem();
+            break;
+        case "srchApply":
+            console.log("PESQUISANDO!");
+            updateScreem();
+            break;
+        case "srchCls":
+            shrch.value = "";
+            updateScreem();            
+            break;
+        default:
+            break;
     }
 })
 
-btnSv.addEventListener("click", () => {
+btnSv.addEventListener("click", () => {//ao clicar/apertar botao salvar do formulario
+    //limpa a barra de pesquisa
     shrch.value = "";
+
+    //checa se esta tudo certo
     if(title.value != "" && title.value != undefined && title.value.length >= 8 && skill.value != "" && skill.value.length >= 2
                          && category.selectedIndex != 0 && (desc.value == "" || desc.value.length >= 16))
-        {
+        {//libera botão de salvar e cria um card
             btnSv.disabled = false;
             const card = new TipCard(
                 title.value,
@@ -132,10 +103,10 @@ btnSv.addEventListener("click", () => {
                 video.value
             )
             
+            //salva cartão novo e update a tela apos confirma ao usuario sucesso
             card.saveCardList(card);
             saveCards();
             alert(`A tip ${title.value} foi salva com sucesso!`);
-            //video.value = ""
             updateScreem();
         }
     else{
@@ -143,7 +114,7 @@ btnSv.addEventListener("click", () => {
     }
 })
 
-document.getElementById("forms").addEventListener("submit", (e) => {
+form.addEventListener("submit", (e) => {//quando um cartão é feito com sucesso, o formulado é limpado
     e.preventDefault();
     title.value = "";
     skill.value = "";
@@ -152,78 +123,17 @@ document.getElementById("forms").addEventListener("submit", (e) => {
     video.value = "";  
 })
 
-function updateScreem(){
-    document.getElementById("tipBoard").innerHTML = "";
-    const totalVl = document.getElementById("total");
-    const frontVl = document.getElementById("fE");
-    const backVl = document.getElementById("bE");
-    const fullStcVl = document.getElementById("fS");
-    const softVl = document.getElementById("stS");
-
-    totalVl.innerText = 0;
-    frontVl.innerText = 0;
-    backVl.innerText = 0;
-    fullStcVl.innerText = 0;
-    softVl.innerText = 0;
-
-    loadCards();
-
-    cardVt.filter((cards, i) => {
-        if(cards.title.toLocaleLowerCase().includes(shrch.value.toLocaleLowerCase()))
-            cards.makecard(cards, i.toString())
-
-        switch (cards.cat) {
-            case "FrontEnd":
-                frontVl.innerText = Number(frontVl.innerText) + 1;
-                totalVl.innerText = Number(totalVl.innerText) + 1;
-                break;
-            case "BackEnd":
-                backVl.innerText = Number(backVl.innerText) + 1;
-                totalVl.innerText = Number(totalVl.innerText) + 1;
-                break;
-            case "FullStack":
-                fullStcVl.innerText = Number(fullStcVl.innerText) + 1;
-                totalVl.innerText = Number(totalVl.innerText) + 1;
-                break;
-            case "SoftSkill":
-                softVl.innerText = Number(softVl.innerText) + 1;
-                totalVl.innerText = Number(totalVl.innerText) + 1;
-                break;
-            default:
-                break;
-        }
-    })
-
-    if(cardVt.length > 4){
-        document.getElementById("tipBoard").style.overflowY = "scroll";
-    }
-    else
-        document.getElementById("tipBoard").style.overflowY = "hidden";
-}
-
-function saveCards(){
-    const JSONCardSvr = JSON.stringify(cardVt);
-    localStorage.setItem("Cards", JSONCardSvr);
-}
-
-function loadCards(){
-    const loader = localStorage.getItem("Cards");
-
-    if(loader && loader.length > 2){
-        const _temp = JSON.parse(loader);
-
-        cardVt.splice(0, cardVt.length)
-    
-        _temp.forEach(element => {
-            element.hLink = (element.hLink == "" || element.hLink == undefined || element.hLink == true) ?  "" : element.hLink;
-            // console.log(element.hLink)
-            // console.log(chkLink(element.hLink))
-            
-            cardVt.push(new TipCard(element.title, element.skill, element.cat, element.desc, element.hLink));
-        });
+function checkForms(isEdit = false){//checa se o preenchimento dos imputs do forms e do editmode estão corretos
+    if(!isEdit){
+        return (title.value != "" && title.value != undefined && title.value.length >= 8 && skill.value != "" && skill.value.length >= 2
+                && category.selectedIndex != 0 && (desc.value == "" || desc.value.length >= 16) && chkLink(video.value));
+    }else{
+        return (document.getElementById("labelTitle").value != "" && document.getElementById("labelTitle").value != undefined  
+                && document.getElementById("labelTitle").value.length >= 8 
+                && document.getElementById("labelSkill").value != "" && document.getElementById("labelSkill").value.length >= 2
+                && (document.getElementById("labelDesc").value == "" || document.getElementById("labelDesc").value.length >= 16)
+                && (chkLink(document.getElementById("labelLink").value, true) ||  document.getElementById("labelLink").value == ""));
     }
 }
 
-
-console.log(new URL("https://youtu.be/mUSn1Jqdv4k").pathname)
-updateScreem();
+updateScreem();//inicio

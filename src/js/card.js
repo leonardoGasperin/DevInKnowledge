@@ -1,5 +1,6 @@
-export const cardVt = [];
-export let editorInd;
+/**toda montagem de cartões é feita aqui */
+export const cardVt = [];//vetor onde guarda os tip cards
+export let editorInd;//referencia do valor do index na lista cardVt
 
 
 export default class TipCard{
@@ -165,6 +166,7 @@ export default class TipCard{
     }
 }
 
+//não, não usei regex
 export function chkLink(url = new URL(), editChck = false){//checa se é um link do youtube e monta o link embed para fazer o iframe do cartao aberto
     //assert
         //console.log(url, new URL("https://www.youtube.com").origin)
