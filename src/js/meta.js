@@ -1,9 +1,6 @@
-/**toda a logica para atualizar os metadados da pagina
- */
 import TipCard, { cardVt, deleteFromList, editMode, editing, editorInd } from "./card.js";
 
 export function updateScreem(){
-    //prepara elementos html do painel direito a ser atualizado
     document.getElementById("tipBoard").innerHTML = "";
     const totalVl = document.getElementById("total");
     const frontVl = document.getElementById("fE");
@@ -12,22 +9,18 @@ export function updateScreem(){
     const softVl = document.getElementById("stS");
     const shrch = document.getElementById("search");
 
-    //zera estatistica
     totalVl.innerText = 0;
     frontVl.innerText = 0;
     backVl.innerText = 0;
     fullStcVl.innerText = 0;
     softVl.innerText = 0;
 
-    //carrega novas meta data
     loadCards();
 
-    //e prepara o filto para mostar cartoes na tela ou pesquisados
     cardVt.filter((cards, i) => {
         if(cards.title.toLocaleLowerCase().includes(shrch.value.toLocaleLowerCase()))
             cards.makecard(cards, i.toString())
 
-        //atualiza valores das estatistica
         switch (cards.cat) {
             case "FrontEnd":
                 frontVl.innerText = Number(frontVl.innerText) + 1;
@@ -65,13 +58,13 @@ export function saveCards(){
 function loadCards(){
     const loader = localStorage.getItem("Cards");
 
-    if(loader && loader.length > 2){//checa de loader é vazio
+    if(loader && loader.length > 2){
         const _temp = JSON.parse(loader);
 
-        cardVt.splice(0, cardVt.length)//limpa a lista antiga
+        cardVt.splice(0, cardVt.length)
     
-        _temp.forEach(element => {//adiciona a lista antiga
-            element.hLink = (element.hLink == "" || element.hLink == undefined || element.hLink == true) ?  "" : element.hLink;//segurança em priemiro lugar
+        _temp.forEach(element => {
+            element.hLink = (element.hLink == "" || element.hLink == undefined || element.hLink == true) ?  "" : element.hLink;
             
             cardVt.push(new TipCard(element.title, element.skill, element.cat, element.desc, element.hLink));
         });
@@ -80,38 +73,29 @@ function loadCards(){
 
 export function deletCard(ind){
     if(confirm(`reamente deseja deletar a Tip ${cardVt[Number(ind)].title}`)){
+        if(document.getElementById("openOverlay").style.display == "flex"){
+            document.getElementById("tipOpen").outerHTML = "";
+            document.getElementById("openOverlay").style.display = "none";
+        }
         deleteFromList(Number(ind));
         saveCards();
-        if(document.getElementById("vanderlay").style.display == "flex"){
-            document.getElementById("tipOpn").outerHTML = "";
-            document.getElementById("vanderlay").style.display = "none";
-        }
         updateScreem();
     }
 }
 
 export function callEditorMode(ind){
-    alert(`Você agora esta abrindo o Edit Mode, qualquer alteração feita feita em ${cardVt[Number(ind)].title} sobrescreverá a Tip.
-            \nTem certeza que deseja abrir o Edit Mode?`);
+    document.getElementById("openOverlay").innerHTML = "";
+    document.getElementById("openOverlay").style.display = "none";  
+    alert(`Você agora esta abrindo o Edit Mode, qualquer alteração feita feita em ${cardVt[Number(ind)].title} sobrescreverá a Tip.`);
     
     editMode(Number(ind));
-    if(document.getElementById("tipOpn")){
-            document.getElementById("tipOpn").outerHTML = "";}
-    document.getElementById("editlay").style.display = "none";
-    if(document.getElementById("vanderlay").style.display = "flex"){
-        
-        document.getElementById("vanderlay").style.display = "none";
-    }
-    document.getElementById("editlay").style.display = "flex";
+    document.getElementById("openOverlay").style.display = "flex";
 }
 
 export function cancelEditor(ind){
     if(confirm(`Gostaria de sair do Edit Mode? Todas as informações alteradas em ${cardVt[Number(ind)].title} não serão salvas`)){    
-        document.getElementById("editlay").style.display = "none";
-        document.getElementById("tipEditor").outerHTML = "";
-        if(document.getElementById("vanderlay").style.display = "flex"){
-            document.getElementById("vanderlay").style.display = "none";
-        }
+        document.getElementById("openOverlay").innerHTML = "";
+        document.getElementById("openOverlay").style.display = "none";
     }
 
 }
@@ -121,13 +105,7 @@ export function doEditor(ind){
         editing(editorInd);
         saveCards();
         updateScreem();
-        document.getElementById("editlay").style.display = "none";
-        document.getElementById("tipEditor").outerHTML = "";
-        
-        if(document.getElementById("vanderlay").style.display = "flex"){
-            if(document.getElementById("tipOpn"))
-                document.getElementById("tipOpn").outerHTML = "";
-            document.getElementById("vanderlay").style.display = "none";
-        }
+        document.getElementById("openOverlay").innerHTML = "";
+        document.getElementById("openOverlay").style.display = "none";
     }
 }

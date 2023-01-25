@@ -1,5 +1,3 @@
-/**toda logica e atualização do html é feita aqui
- */
 import TipCard, { cardVt, chkLink} from "./card.js";
 import { updateScreem, saveCards, deletCard, callEditorMode, cancelEditor, doEditor,  } from "./meta.js";
 
@@ -12,14 +10,13 @@ const desc = document.getElementById("desc");
 const video = document.getElementById("video");
 const shrch = document.getElementById("search");
 
-addEventListener("change", () => {//a cada mudança na pagina o form é checado para liberar ou nao o botao de salvar
+addEventListener("change", () => {
     if(checkForms())
         {
             btnSv.disabled = false;
         }else
             btnSv.disabled = true;
     
-    //aqui faz a mesma checagem para liberar ou nao o botão para elementos inputs no cartão de edição
     if(document.getElementById("editEditor"))
     {
         if(checkForms(true))
@@ -31,21 +28,19 @@ addEventListener("change", () => {//a cada mudança na pagina o form é checado 
     }
 })
 
-addEventListener("click", () => {//checa form a cada click na tela para liberar botao de salvar ou nao
-    if(checkForms())
-        {
-            btnSv.disabled = false;
-        }
-    else
-        btnSv.disabled = true;
-})
+// addEventListener("click", () => {
+//     if(checkForms())
+//         {
+//             btnSv.disabled = false;
+//         }
+//     else
+//         btnSv.disabled = true;
+// })
 
 addEventListener("click", (e) => {
-    ///TODO
-      //mudar para switch()
     if(e.target.className == "overlay"){
         cardVt[Number(e.target.id)].openCard(cardVt[Number(e.target.id)], e.target.id);
-        document.getElementById("vanderlay").style.display = "flex";
+        document.getElementById("openOverlay").style.display = "flex";
         cardVt[Number(e.target.id)]
     }
     else if(e.target.id == "vanderlay"){
@@ -66,15 +61,12 @@ addEventListener("click", (e) => {
         case "editEditor":
             doEditor(e.target.name);
             break;
-        case "editlay":
-        case "delEditor":
-            document.getElementById("tipEditor").outerHTML = "";
-            document.getElementById("editlay").style.display = "none";
-        
+        case "openOverlay":
+            document.getElementById("openOverlay").innerHTML = "";
+            document.getElementById("openOverlay").style.display = "none";
             updateScreem();
             break;
         case "srchApply":
-            console.log("PESQUISANDO!");
             updateScreem();
             break;
         case "srchCls":
@@ -86,14 +78,12 @@ addEventListener("click", (e) => {
     }
 })
 
-btnSv.addEventListener("click", () => {//ao clicar/apertar botao salvar do formulario
-    //limpa a barra de pesquisa
+btnSv.addEventListener("click", () => {
     shrch.value = "";
 
-    //checa se esta tudo certo
     if(title.value != "" && title.value != undefined && title.value.length >= 8 && skill.value != "" && skill.value.length >= 2
                          && category.selectedIndex != 0 && (desc.value == "" || desc.value.length >= 16))
-        {//libera botão de salvar e cria um card
+        {
             btnSv.disabled = false;
             const card = new TipCard(
                 title.value,
@@ -103,7 +93,6 @@ btnSv.addEventListener("click", () => {//ao clicar/apertar botao salvar do formu
                 video.value
             )
             
-            //salva cartão novo e update a tela apos confirma ao usuario sucesso
             card.saveCardList(card);
             saveCards();
             alert(`A tip ${title.value} foi salva com sucesso!`);
@@ -114,7 +103,7 @@ btnSv.addEventListener("click", () => {//ao clicar/apertar botao salvar do formu
     }
 })
 
-form.addEventListener("submit", (e) => {//quando um cartão é feito com sucesso, o formulado é limpado
+form.addEventListener("submit", (e) => {
     e.preventDefault();
     title.value = "";
     skill.value = "";
@@ -123,7 +112,7 @@ form.addEventListener("submit", (e) => {//quando um cartão é feito com sucesso
     video.value = "";  
 })
 
-function checkForms(isEdit = false){//checa se o preenchimento dos imputs do forms e do editmode estão corretos
+function checkForms(isEdit = false){
     if(!isEdit){
         return (title.value != "" && title.value != undefined && title.value.length >= 8 && skill.value != "" && skill.value.length >= 2
                 && category.selectedIndex != 0 && (desc.value == "" || desc.value.length >= 16) && chkLink(video.value));
@@ -136,4 +125,4 @@ function checkForms(isEdit = false){//checa se o preenchimento dos imputs do for
     }
 }
 
-updateScreem();//inicio
+updateScreem();

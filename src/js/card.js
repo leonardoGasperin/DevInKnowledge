@@ -1,7 +1,5 @@
-/**toda montagem de cartões é feita aqui */
-export const cardVt = [];//vetor onde guarda os tip cards
-export let editorInd;//referencia do valor do index na lista cardVt
-
+export const cardVt = [];
+export let editorInd;
 
 export default class TipCard{
     constructor(title, skill, cat, desc, hLink){
@@ -12,8 +10,7 @@ export default class TipCard{
         this.hLink = chkLink(hLink);
     }
 
-    makecard(obj = new TipCard(), i){//montagem do cartão basico(fechado/painel da direita)
-        //cria/prepara elementos html
+    makecard(obj = new TipCard(), i){
         const asideBx = document.getElementById("tipBoard");
         const overlayDiv = document.createElement("div");
         const tipCard = document.createElement("div");
@@ -27,11 +24,10 @@ export default class TipCard{
         const btnEdit = document.createElement("button");
         const btnVideo = document.createElement("a");
 
-        //atribui seus dividos id e classe
         overlayDiv.className = "overlay";
         tipCard.className = "tip";
-        cardSkill.className = "tipP";
-        cardCat.className = "tipP";
+        cardSkill.className = "tipSkill";
+        cardCat.className = "tipSkill";
         descAside.className = "AsideDesc";
         cardDesc.className = "desc";
         divBtn.id = "tipBtnDiv";
@@ -42,7 +38,6 @@ export default class TipCard{
         btnVideo.className = "tipbtn";
         btnVideo.id = "video";
 
-        //monta elementos html do cartão
         cardTitle.innerHTML = obj.title;
         tipCard.append(cardTitle);
 
@@ -80,16 +75,14 @@ export default class TipCard{
 
         asideBx.appendChild(tipCard);
 
-        //adiciona referencia do elemento no array
-        overlayDiv.id = i;//abrir cartao
-        btnDel.name = i;//deleta cartao
-        btnEdit.name = i;//edita cartao
+        overlayDiv.id = i;
+        btnDel.name = i;
+        btnEdit.name = i;
         tipCard.appendChild(overlayDiv);
     }
 
-    openCard(obj = new TipCard(), i){//montagem do cartão aberto
-        //criam/prepara elementos html
-        const overDiv = document.getElementById("vanderlay");
+    openCard(obj = new TipCard(), i){
+        const overDiv = document.getElementById("openOverlay");
         const opnTipDiv = document.createElement("div");
         const opnInfoDiv = document.createElement("div");
         const opnCardTitle = document.createElement("h4");
@@ -102,11 +95,10 @@ export default class TipCard{
         const opnBtnDel = document.createElement("button");
         const opnBtnEdit = document.createElement("button");
 
-        //atribui seus devidos id e classe
-        opnTipDiv.id = "tipOpn";
+        opnTipDiv.id = "tipOpen";
         opnInfoDiv.id = "titleOpenCard";
-        opnCardSkill.className = "opnTipP";
-        opnCardCat.className = "opnTipP";
+        opnCardSkill.className = "tipOpenCard";
+        opnCardCat.className = "tipOpenCard";
         opnDivDesc.id = "opnDescDiv";
         opnCardDesc.className = "opnDesc";
         opnCardLink.id = "opnTipVideo";
@@ -118,7 +110,6 @@ export default class TipCard{
         opnBtnEdit.name = i;
         opnBtnEdit.id = "edit";
 
-        //monta elementos html do cartão aberto
         opnCardTitle.innerHTML = obj.title;
         opnInfoDiv.append(opnCardTitle);
         opnTipDiv.append(opnInfoDiv)
@@ -144,13 +135,13 @@ export default class TipCard{
             opnTipDiv.style.overflowY = "none";
         opnDivDesc.append(opnCardDesc);
 
-        if(obj.hLink != "" && obj.hLink != true){//youtube doa este codigo em sua area de PC->compartilhamento->incorporar, porem na escrita do HTML
+        if(obj.hLink != "" && obj.hLink != true){
             const videoIframe = document.createElement("iframe");
             videoIframe.width = "560";
             videoIframe.height= "315";
             videoIframe.src = obj.hLink;
             videoIframe.title = "YouTube video player";
-            videoIframe.frameBorder = "0";//incorporar do youtube usa
+            videoIframe.frameBorder = "0";
             videoIframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
             videoIframe.allowFullscreen = true;
 
@@ -170,61 +161,49 @@ export default class TipCard{
     }
 }
 
-//não, não usei regex
-export function chkLink(url = new URL(), editChck = false){//checa se é um link do youtube e monta o link embed para fazer o iframe do cartao aberto
-    //assert
-        //console.log(url, new URL("https://www.youtube.com").origin)
-    
-    //checa se é um URL
+export function chkLink(url = new URL(), editChck = false){
     if(chrckUrl(url)){
         if(url != "" ){
             url = new URL(url);
-            if(url.pathname != "/embed/.*"){//necessario, caso queira tirar ou trocar link do video ou manter, sem perder o dado de search do link, ao ter loads
+            if(url.pathname != "/embed/.*"){
                 if(url.origin == new URL("https://www.youtube.com").origin && url.pathname == "/watch")
-                {//checa se é link da barra de url do navegador
+                {
                     let link = "";
 
                     for(let i = 3; i < 14; i++)
-                    {//pega somente valor necessario para search do link
+                    {
                         link += url.search.charAt(i);
                     }
 
-                    //retorna link embed para iframe do cartão aberto
                     return url.origin + "/embed/" + link;
-                }//caso nao seja link wtach, checa se nao é link de compartilhamento
+                }
                 else if(url.origin == new URL("https://youtu.be").origin)
-                {//monta o link enbed para iframe do cartão aberto
-
+                {
                     let link = "https://www.youtube.com" + "/embed" + url.pathname
 
                     return link;
-                }else{//caso contrarop
+                }else{
                     if(url.origin == new URL("https://www.youtube.com").origin)
-                    {//para edição, caso usuario nao edite alguma url ja existente
+                    {
                         return url;
                     }
                     return false;
                 }
-            }else{//para o load, caso o link youtube ja seja embed nao o altera
+            }else{
                 return url;
             }
-        }else//aceita campo vazio para salvar e editar.
+        }else
             return true
-    }else{//caso nao seja URL manda false para edit e true para criar cartão
+    }else{
         if(editChck)
             return false;
         else
-            return true;//se nao for um link nao salvara nada.
+            return true;
     }
 }
 
-/** OBS:
-  * este "cartão" de modo de edição leva com ele nomes basicos
-  * de elementos do cartão aberto pois ele é exatamente uma
-  * copia do cartão aberto utilizando o mesmo CSS */ 
-export function editMode(i){//montagem do cartão para edição
-    //cria/prepara elementos html
-    const overDiv = document.getElementById("editlay");
+export function editMode(i){
+    const overDiv = document.getElementById("openOverlay");
     const editTipDiv = document.createElement("div");
     const editInfoDiv = document.createElement("div");
     const labelTitle = document.createElement("label");
@@ -232,7 +211,7 @@ export function editMode(i){//montagem do cartão para edição
     const labelSkill = document.createElement("label");
     const editCardSkill = document.createElement("input");        
     const labelCat = document.createElement("label");
-        //criando/preparando o select das categorias
+   
     const editCardCat = document.createElement("select");
     const fECat = document.createElement("option");//fE frontEnd
     const bECat = document.createElement("option");//bE backEnd
@@ -249,8 +228,7 @@ export function editMode(i){//montagem do cartão para edição
     const editBtnDel = document.createElement("button");
     const editBtnEdit = document.createElement("button");
 
-    //atribui seus devidos id, classe e nome, como tambem injetando texto nas label's
-    editTipDiv.id = "tipEditor";
+    editTipDiv.id = "tipOpen";
     editInfoDiv.id = "titleOpenCard";
 
     labelTitle.htmlFor = "labelTitle";
@@ -261,7 +239,7 @@ export function editMode(i){//montagem do cartão para edição
     labelSkill.htmlFor = "labelSkill";
     editCardSkill.name = "labelSkill";
     editCardSkill.id = "labelSkill";
-    editCardSkill.className = "opnTipP";
+    editCardSkill.className = "tipOpenCard";
     labelSkill.innerHTML ="Skill";
     
     labelCat.htmlFor = "labelCat";
@@ -291,7 +269,6 @@ export function editMode(i){//montagem do cartão para edição
     editBtnEdit.name = i;
     editBtnEdit.id = "editEditor";
 
-    //monta elementos html do cartão de edição
     editCardTitle.minLength= 8;
     editCardTitle.maxlength = 16;
     editCardTitle.required = true;
@@ -342,23 +319,23 @@ export function editMode(i){//montagem do cartão para edição
     editBtnEdit.innerHTML = "Confirmar";
     editDivBtn.append(editBtnEdit);
     
-    makeEditorInd(i);//apos a criar o ambiente de edição registra qual item do cardVt sera editado;
+    makeEditorInd(i);
 }
 
 export function editing(i){
-    if(typeof i == "number"){//se makeEditorInd(i) for um numero as data do item recebe os novos valores.
+    if(typeof i == "number"){
         cardVt[i].title = document.getElementById("labelTitle").value;
         cardVt[i].skill = document.getElementById("labelSkill").value;
         cardVt[i].cat = document.getElementById("labelCat").value;
         cardVt[i].desc = document.getElementById("labelDesc").value;
 
-        if(!chrckUrl(document.getElementById("labelLink").value)){//checa se não é um link do youtube 
+        if(!chrckUrl(document.getElementById("labelLink").value)){ 
             cardVt[i].hLink = "";
         }else
             cardVt[i].hLink = document.getElementById("labelLink").value;
         
         document.getElementById("labelLink").value = "";
-        i = undefined;//por segurança depois daqui nao edita mais sem dar inicio a edição.
+        i = undefined;
     }
 }
 
@@ -366,7 +343,6 @@ export function deleteFromList(i){
     cardVt.splice(i, 1);
 }
 
-//referencia(index) de quem sera editado
 function makeEditorInd(i){
     editorInd = i
 }
